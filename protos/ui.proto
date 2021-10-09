@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package ui;
+
+
+// *****************************************
+// User Interface message service
+// *****************************************
+service UiMessages {
+  rpc GetControllerStatus (ControllerStatusCmd) returns (ControllerStatusResp) {}
+}
+
+// UI commands
+enum UiCmd {
+  U_NONE = 0;
+  U_CNTRL_STATUS = 1;
+}
+
+// UI command response status
+enum StatusCmdStatus {
+  US_NONE = 0;
+  US_GOOD = 1;
+  US_UNEXPECTED_CMD = 98;
+  US_SERVER_EXCEPTION = 99;
+}
+
+
+// Get controller status COMMAND message.
+message ControllerStatusCmd {
+  UiCmd cmd = 1;
+}
+
+
+// Get controller status RESPONSE message.
+message ControllerStatusResp {
+  StatusCmdStatus status = 1;
+  string name = 2;
+  string state = 3;
+  string cTime = 4;
+}

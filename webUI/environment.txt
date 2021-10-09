@@ -1,0 +1,36 @@
+// Files relative to top level iot/ folder.
+
+// Compiling proto file.
+// iot/protos/ui.proto
+
+// Activate the virtual environment.
+source venv/bin/activate (linux)
+venv\Scripts\activate.bat (CMD)
+venv\Scripts\Activate.ps1 (Win PowerShell)
+
+// From the webUI folder
+python -m grpc_tools.protoc -I ../protos --python_out=. --grpc_python_out=. ../protos/ui.proto
+
+// This generates files:
+// ./webUI/ui_pb2.py
+// ./webUI/ui_pb2_grpc.py
+// Need to edit ui_pb2_grpc.py to fix import to:
+// import webUI.ui_pb2 as ui__pb2
+
+// Setting up flask environment (inside virtual environment)
+// Set up from the iot/ top folder level.
+export FLASK_APP=webUI (linux)
+export FLASK_ENV=development (linux)
+set FLASK_APP=webUI (CMD)
+set FLASK_ENV=development (CMD)
+$env:FLASK_APP = "webUI" (Win PowerShell)
+$env:FLASK_ENV = "development" (Win PowerShell)
+
+// To initialise the flask db (if required)
+// Note that you have evironments above set up)
+flask init-db
+
+// Running flask (after environments set up)
+flask run
+
+// Login from http://127.0.0.1:5000/auth/login

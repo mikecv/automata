@@ -1,0 +1,16 @@
+// Files relative to top level iot/ folder.
+
+// Compiling proto file.
+// ./protos/ui.proto
+
+// Activate the virtual environment.
+source venv/bin/activate (linux)
+venv\Scripts\activate.bat (CMD)
+venv\Scripts\Activate.ps1 (Win PowerShell)
+
+// From the sprinklers folder
+python -m grpc_tools.protoc -I../protos --python_out=. --grpc_python_out=. ../protos/ui.proto
+
+// This generates files:
+// ./sprinklers/ui_pb2.py
+// ./sprinklers/ui_pb2_grpc.py

@@ -1,0 +1,18 @@
+{
+    "ConfigVersion": 1,
+    "ControllerName": "Garden Reticulation",
+    "IPaddress": "127.0.0.1",
+    "DebugLevel": 10,
+    "LogFileSize": 100000,
+    "LogBackups": 3,
+    "Timers": {
+        "MainSleep": 1.0
+    },
+    "GRPC": {
+        "ListenPort": 50051
+    },
+    "UI": {
+        "UIPort": 50150,
+        "UISleep": 1.0
+    }
+}

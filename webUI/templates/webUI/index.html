@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <head>
+    {% if g.user %}
+      <meta http-equiv="refresh" content="{{ refresh }}">
+    {% endif %}
+  </head>
+{% endblock %}
+
+<section class="content">
+  {% block content %}
+    {% if g.user %}
+
+      <!-- Controller status if user logged in. -->
+      <h2>{{ cData["name"] }}</h2>
+      {% if linkStale == True %}
+        <a>Waiting for controller to connect...</a>
+      {% else %}
+        <div>
+          <table style="text-align:left">
+            <tr>
+              <th width="50px"; ><a>State</a></th>
+              <th><a-dyn>{{ cData["state"] }}</a-dyn></th>
+            </tr>
+            <tr>
+              <th width="50px"; ><a>Time</a></th>
+              <th><a-dyn>{{ cData["cTime"] }}</a-dyn></th>
+            </tr>
+        </table>
+        </div>
+      {% endif %}
+
+      {% else %}
+      <p>Thank you for using Automata.</p>
+
+    {% endif %}
+  {% endblock %}
+</section>
