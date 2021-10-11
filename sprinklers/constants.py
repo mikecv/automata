@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
-from enum import Enum
+from ..generic.genericConstants import *
 
+# ********************************************************
+# Generic constants defined in ..generic.genericConstants.
+# Application specific constants added here (below).
+# ********************************************************
 
-class ControllerState(Enum):
-    """
-    Controller states.
-    """
-    STARTING = 0
-    INITIALISING = 1
-    ACTIVE = 2
-    FAILED = 3
-    TERMINATING = 4

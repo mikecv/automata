@@ -4,7 +4,7 @@ from threading import Thread
 import logging
 import time
 
-from genericController import *
+from ..generic.genericController import *
 from config import *
 
 class SprinklerController(GenericController, Thread):   
