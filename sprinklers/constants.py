@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from ..generic.genericConstants import *
+from generic.genericConstants import *
 
 # ********************************************************
 # Generic constants defined in ..generic.genericConstants.

@@ -2,4 +2,4 @@
 
 ECHO Creating sprinkler controller...
 
-venv\Scripts\activate.bat && cd sprinklers && python main.py
+venv\Scripts\activate.bat && python main.py

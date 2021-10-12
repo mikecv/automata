@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 
-from genericConstants import *
+from generic.genericConstants import *
 
 
 class GenericController():   

@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import ui_pb2 as ui__pb2
+import sprinklers.ui_pb2 as ui__pb2
 
 
 class UiMessagesStub(object):

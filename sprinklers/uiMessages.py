@@ -2,11 +2,11 @@
 
 from datetime import datetime
 import grpc
-import ui_pb2 as ui_pb2
-import ui_pb2_grpc as ui_pb2_grpc
+import sprinklers.ui_pb2 as ui_pb2
+import sprinklers.ui_pb2_grpc as ui_pb2_grpc
 
-from config import *
-from controller import *
+from sprinklers.config import *
+from sprinklers.controller import *
 
 
 class UiCommands(ui_pb2_grpc.UiMessages):

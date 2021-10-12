@@ -4,10 +4,10 @@ from concurrent import futures
 from threading import Thread
 import time
 import grpc
-import ui_pb2_grpc as ui_pb2_grpc
+import sprinklers.ui_pb2_grpc as ui_pb2_grpc
 
-from constants import *
-from uiMessages import *
+from sprinklers.constants import *
+from sprinklers.uiMessages import *
 
 
 class UIServer(Thread):   
