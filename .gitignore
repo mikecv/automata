@@ -4,5 +4,5 @@ sprinklers/build/
 sprinklers/dist/
 instance/*.sqlite
 venv/
-*.log*
+logs/*.log*
 *.code-workspace

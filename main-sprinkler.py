@@ -4,6 +4,7 @@ import argparse
 import logging
 import logging.handlers
 import time
+import os
 
 from sprinklers.config import *
 from sprinklers.controller import *
@@ -80,8 +81,9 @@ if __name__ == "__main__":
         print(f"Program version : {progVersion}")
     else:
         # Use default config & log file names if not specified.
-        cFile = progName + ".json"
-        lFile = progName + ".log"
+        cFile = os.path.join("./config", progName + "." + "json")
+        lFile = os.path.join("./logs", progName + "." + "log")
+
         if args.config:
             cFile = args.config
         if args.log:

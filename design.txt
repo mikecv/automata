@@ -1,0 +1,41 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SECTION 1 - BACKGROUND
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Home automation applications. Each application is for one particular
+controller.
+
+The intent is that the controller would also provide a web interface to provide
+supervisory access and control to the controller.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SECTION 2 - DESIGN
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--------------------------------------------------------------------------------
+2.1 - Controller Design
+--------------------------------------------------------------------------------
+
+Each controller inherits a generic controller class.
+
+--------------------------------------------------------------------------------
+2.2 - User Interface
+--------------------------------------------------------------------------------
+
+The controller serves controller data to an external UI.
+
+The User Interface is a simple Flask web server, based on the tutorial on
+the Flask Home Page. The web server includes a basic registration and login
+functionality, and limited web pages, predominantly display of controller data,
+and a limited number of user controls.
+
+The controller is listening for gRPC requests from UI clients and responds to
+the clients with particular controller and client data.
+
+Similarly, the controller is listening for control commands from the UI to
+perform specific control functions.
+
+The requesting of data from the controller is split into 2 messages.
+The first message is to get controller status. If there is a connection to the
+controller, then a second message is used to get the data for the controller.
+The controller data will be larger than the controller status so it is
+serialised by the controller, and then deserialised by the UI for display.
