@@ -1,7 +1,5 @@
 __pycache__/
 sprinklers/__pycache__/
-sprinklers/build/
-sprinklers/dist/
 instance/*.sqlite
 venv/
 logs/*.log*
