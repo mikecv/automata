@@ -44,6 +44,9 @@ def index():
                 "name" : response.name,
                 "state" : response.state,
                 "cTime" : response.cTime,
+                "mode" : response.mode,
+                "program" : response.program,
+                "outputs" : response.outputs
             }
 
             # Speed up web page refresh rate now that we are connected.
