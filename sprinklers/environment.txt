@@ -1,4 +1,4 @@
-// Files relative to top level iot/ folder.
+// Files relative to top level automata/ folder.
 
 // Compiling proto file.
 // ./protos/ui.proto
@@ -14,3 +14,5 @@ python -m grpc_tools.protoc -I../protos --python_out=. --grpc_python_out=. ../pr
 // This generates files:
 // ./sprinklers/ui_pb2.py
 // ./sprinklers/ui_pb2_grpc.py
+// Need to edit ui_pb2_grpc.py to fix import to:
+// import sprinklers.ui_pb2 as ui__pb2

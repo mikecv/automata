@@ -73,3 +73,73 @@ class UiMessages(object):
             ui__pb2.ControllerStatusResp.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class UiControlModeStub(object):
+    """*****************************************
+    User Interface control service
+    *****************************************
+    """
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SetController = channel.unary_unary(
+                '/ui.UiControlMode/SetController',
+                request_serializer=ui__pb2.SetControllerModeCmd.SerializeToString,
+                response_deserializer=ui__pb2.SetControllerModeResp.FromString,
+                )
+
+
+class UiControlModeServicer(object):
+    """*****************************************
+    User Interface control service
+    *****************************************
+    """
+
+    def SetController(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_UiControlModeServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SetController': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetController,
+                    request_deserializer=ui__pb2.SetControllerModeCmd.FromString,
+                    response_serializer=ui__pb2.SetControllerModeResp.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'ui.UiControlMode', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class UiControlMode(object):
+    """*****************************************
+    User Interface control service
+    *****************************************
+    """
+
+    @staticmethod
+    def SetController(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ui.UiControlMode/SetController',
+            ui__pb2.SetControllerModeCmd.SerializeToString,
+            ui__pb2.SetControllerModeResp.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

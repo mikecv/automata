@@ -39,6 +39,9 @@ class UiCommands(ui_pb2_grpc.UiMessages):
                 resp.name = self.cfg.ControllerName
                 resp.state = self.ctrl.state.name
                 resp.cTime = datetime.now().strftime("%H:%M:%S")
+                resp.mode = self.ctrl.mode.name
+                resp.program = self.ctrl.program
+                resp.outputs = self.ctrl.outputs
                 return resp
 
             except grpc.RpcError as e:
