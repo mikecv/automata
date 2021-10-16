@@ -17,9 +17,18 @@ class GenericController():
 
         self.ctrlName = name
 
-        # Initialise state of the controller.
+        # Initialise state/mode of the controller.
         self.stayAlive = True
         self.state = ControllerState.STARTING
+        self.mode = ControllerMode.OFF
+
+        # Initialise controller program to empty.
+        # <TODO> Array of program entries.
+        self.program = "Empty"
+
+        # Initialise controller output states.
+        # <TODO> this will be an object of an outputs class.
+        self.outputs = "All Off"
 
     def stateMachine(self) -> None:
         """
@@ -46,6 +55,9 @@ class GenericController():
 
         # Transition to the active state.
         self.state = ControllerState.ACTIVE
+
+        # Initialise controller mode to OFF.
+        self.mode = ControllerMode.OFF
 
     @abstractmethod
     def controlling(self) -> None:

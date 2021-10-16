@@ -37,4 +37,7 @@ message ControllerStatusResp {
   string name = 2;
   string state = 3;
   string cTime = 4;
+  string mode = 5;
+  string program = 6;
+  string outputs = 7;
 }

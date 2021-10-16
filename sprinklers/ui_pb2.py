@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x08ui.proto\x12\x02ui\"-\n\x13\x43ontrollerStatusCmd\x12\x16\n\x03\x63md\x18\x01 \x01(\x0e\x32\t.ui.UiCmd\"g\n\x14\x43ontrollerStatusResp\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.ui.StatusCmdStatus\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05state\x18\x03 \x01(\t\x12\r\n\x05\x63Time\x18\x04 \x01(\t*\'\n\x05UiCmd\x12\n\n\x06U_NONE\x10\x00\x12\x12\n\x0eU_CNTRL_STATUS\x10\x01*[\n\x0fStatusCmdStatus\x12\x0b\n\x07US_NONE\x10\x00\x12\x0b\n\x07US_GOOD\x10\x01\x12\x15\n\x11US_UNEXPECTED_CMD\x10\x62\x12\x17\n\x13US_SERVER_EXCEPTION\x10\x63\x32X\n\nUiMessages\x12J\n\x13GetControllerStatus\x12\x17.ui.ControllerStatusCmd\x1a\x18.ui.ControllerStatusResp\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x08ui.proto\x12\x02ui\"-\n\x13\x43ontrollerStatusCmd\x12\x16\n\x03\x63md\x18\x01 \x01(\x0e\x32\t.ui.UiCmd\"\x97\x01\n\x14\x43ontrollerStatusResp\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.ui.StatusCmdStatus\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05state\x18\x03 \x01(\t\x12\r\n\x05\x63Time\x18\x04 \x01(\t\x12\x0c\n\x04mode\x18\x05 \x01(\t\x12\x0f\n\x07program\x18\x06 \x01(\t\x12\x0f\n\x07outputs\x18\x07 \x01(\t*\'\n\x05UiCmd\x12\n\n\x06U_NONE\x10\x00\x12\x12\n\x0eU_CNTRL_STATUS\x10\x01*[\n\x0fStatusCmdStatus\x12\x0b\n\x07US_NONE\x10\x00\x12\x0b\n\x07US_GOOD\x10\x01\x12\x15\n\x11US_UNEXPECTED_CMD\x10\x62\x12\x17\n\x13US_SERVER_EXCEPTION\x10\x63\x32X\n\nUiMessages\x12J\n\x13GetControllerStatus\x12\x17.ui.ControllerStatusCmd\x1a\x18.ui.ControllerStatusResp\"\x00\x62\x06proto3'
 )
 
 _UICMD = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _UICMD = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=168,
-  serialized_end=207,
+  serialized_start=217,
+  serialized_end=256,
 )
 _sym_db.RegisterEnumDescriptor(_UICMD)
 
@@ -79,8 +79,8 @@ _STATUSCMDSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=209,
-  serialized_end=300,
+  serialized_start=258,
+  serialized_end=349,
 )
 _sym_db.RegisterEnumDescriptor(_STATUSCMDSTATUS)
 
@@ -162,6 +162,27 @@ _CONTROLLERSTATUSRESP = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='mode', full_name='ui.ControllerStatusResp.mode', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='program', full_name='ui.ControllerStatusResp.program', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='outputs', full_name='ui.ControllerStatusResp.outputs', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -174,8 +195,8 @@ _CONTROLLERSTATUSRESP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=63,
-  serialized_end=166,
+  serialized_start=64,
+  serialized_end=215,
 )
 
 _CONTROLLERSTATUSCMD.fields_by_name['cmd'].enum_type = _UICMD
@@ -209,8 +230,8 @@ _UIMESSAGES = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=302,
-  serialized_end=390,
+  serialized_start=351,
+  serialized_end=439,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetControllerStatus',

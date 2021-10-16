@@ -1,7 +1,7 @@
-// Files relative to top level iot/ folder.
+// Files relative to top level automata/ folder.
 
 // Compiling proto file.
-// iot/protos/ui.proto
+// automata/protos/ui.proto
 
 // Activate the virtual environment.
 source venv/bin/activate (linux)

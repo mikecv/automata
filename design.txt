@@ -16,6 +16,11 @@ SECTION 2 - DESIGN
 --------------------------------------------------------------------------------
 
 Each controller inherits a generic controller class.
+The generic controller class has state and mode types, and handles state
+transitions.
+
+The generic controller class has an abstract method called "controlling" that
+must be overridden in the specific controller class.
 
 --------------------------------------------------------------------------------
 2.2 - User Interface
