@@ -41,3 +41,40 @@ message ControllerStatusResp {
   string program = 6;
   string outputs = 7;
 }
+
+
+// *****************************************
+// User Interface control service
+// *****************************************
+service UiControlMode {
+  rpc SetController (SetControllerModeCmd) returns (SetControllerModeResp) {}
+}
+
+// UI mode controls
+enum UiModeControl {
+  C_NONE = 0;
+  C_SET_MODE = 1;
+}
+
+
+// UI mode controls response status
+enum UiModeStatus {
+  CS_NONE = 0;
+  CS_GOOD = 1;
+  CS_UNEXPECTED_CMD = 98;
+  CS_SERVER_EXCEPTION = 99;
+}
+
+
+// Set controller mode COMMAND message.
+message SetControllerModeCmd {
+  UiModeControl cmd = 1;
+  string reqMode = 2;
+}
+
+
+// Set controller mode RESPONSE message.
+message SetControllerModeResp {
+  UiModeControl status = 1;
+  string setMode = 2;
+}
