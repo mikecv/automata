@@ -21,16 +21,44 @@
           <table style="text-align:left">
             <tr>
               <th width="75px"; ><a>State</a></th>
-              <th><a-dyn>{{ cData["state"] }}</a-dyn></th>
+              <th width="75px"; ><a-dyn>{{ cData["state"] }}</a-dyn></th>
             </tr>
             <tr>
               <th><a>Time</a></th>
               <th><a-dyn>{{ cData["cTime"] }}</a-dyn></th>
             </tr>
+            <!-- Row with current mode, and mode set buttons. -->
             <tr>
               <th><a>Mode</a></th>
               <th><a-dyn>{{ cData["mode"] }}</a-dyn></th>
-            </tr>
+              <th>
+                <div class="modebtn">
+                  <form method="post" action="/">
+                    <button type="submit" value="MODEON" name="MODEON">ON</button>
+                  </form>
+                </div>
+              </th>
+              <th>
+                <div class="modebtn">
+                  <form method="post" action="/">
+                    <button type="submit" value="MODEOFF" name="MODEOFF">OFF</button>
+                  <form>
+                </div>
+              </th>
+              <th>
+                <div class="modebtn">
+                  <form method="post" action="/">
+                    <button type="submit" value="MODEAUTO" name="MODEAUTO">AUTO</button>
+                  <form>
+                </div>
+              </th>
+              <th>
+                <div class="modebtn">
+                  <form method="post" action="/">
+                    <button type="submit" value="MODEMANUAL" name="MODEMANUAL">MANUAL</button>
+                  <form>
+                </div>
+              </th>
             <tr>
               <th><a>Program</a></th>
               <th><a-dyn>{{ cData["program"] }}</a-dyn></th>

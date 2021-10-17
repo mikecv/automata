@@ -137,3 +137,19 @@ html {
     align-self: start;
     min-width: 10em;
   }
+
+  /* Form button styling, e.g. controller mode buttons. */
+
+  .modebtn button[type=submit] {
+    display: inline-block;
+    padding: 0 0;
+    background: rgb(220, 220, 220);
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    border: 2px solid #187ec2;
+    border-radius: 3px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    transition: ease .3s;
+  }
