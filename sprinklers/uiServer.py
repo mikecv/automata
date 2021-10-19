@@ -16,7 +16,7 @@ class UIServer(Thread):
     Derive from Thread class.
     """
 
-    def __init__(self, config, log, cntlr) -> None:
+    def __init__(self, config: Config, log, ctrl: SprinklerController) -> None:
         """
         Initialisation method.
         Parameters:
@@ -28,7 +28,7 @@ class UIServer(Thread):
         Thread.__init__(self)
         self.cfg = config
         self.log = log
-        self.cntlr = cntlr
+        self.ctrl = ctrl
 
         # Initialise state of the controller.
         self.stayAlive = True
@@ -40,12 +40,14 @@ class UIServer(Thread):
         Mainline will kill thread when self.stayAlive is False.
         """
 
-        self.log.info("Starting UI server...")
+        self.log.debug("Starting UI server...")
         print("Starting UI server...")
 
-        # Configure and start the server to listen for messages from machines.
+        # Configure and start the server to listen for messages from UI.
+        # Add servicers for all UI services.
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-        ui_pb2_grpc.add_UiMessagesServicer_to_server(UiCommands(self.cfg, self.cntlr), server)
+        ui_pb2_grpc.add_UiMessagesServicer_to_server(UiCommands(self.cfg, self.ctrl), server)
+        ui_pb2_grpc.add_UiControlModeServicer_to_server(UiCommands(self.cfg, self.ctrl), server)
         server.add_insecure_port(f'[::]:{self.cfg.UI["UIPort"]}')
         server.start()
 

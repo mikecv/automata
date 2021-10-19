@@ -19,7 +19,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
         Initialisation method.
         Parameters:
             config : Mainline configuration object.
-            log : Mainline logging object.
             ctrl : Controller object.
         """
 
@@ -62,11 +61,16 @@ class UiCommands(ui_pb2_grpc.UiMessages):
 
         if request.cmd == ui_pb2.UiModeControl.C_SET_MODE:
             try:
+                # Need to set the mode to the requested value (if possible).
+                setStatus, setReason = self.ctrl.setMode(ControllerMode[f'{request.reqMode}'])
+
                 # Respond to the UI.
+                # If successful mode is changed, reason code is blank.
                 resp = ui_pb2.SetControllerModeResp()
-                resp.status = ui_pb2.UiModeStatus.CS_GOOD
-                resp.setMode = "Some Mode"
-                resp.reason = "Some Reason"
+                # resp.status = ui_pb2.UiModeStatus.Name(setStatus)
+                resp.status = setStatus
+                resp.setMode = self.ctrl.mode.name
+                resp.reason = setReason.name
                 return resp
 
             except grpc.RpcError as e:
@@ -76,6 +80,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
                 return ui_pb2.ui_pb2.SetControllerModeResp()
         else:
             # Unexpected command in controller mode set request.
-            context.set_code(ui_pb2.UiModeStatus.US_UNEXPECTED_CMD)
+            context.set_code(ui_pb2.UiModeStatus.CS_UNEXPECTED_CMD)
             context.set_details("Unexpected command.")
             return ui_pb2.ui_pb2.SetControllerModeResp()

@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
 import json
@@ -8,6 +9,8 @@ import webUI.ui_pb2_grpc as ui_pb2_grpc
 from flask import current_app
 from webUI.auth import login_required
 from webUI.db import get_db
+
+from generic.genericConstants import *
 
 bp = Blueprint('webUI', __name__)
 
@@ -26,29 +29,31 @@ def index():
     staleData = True
     cntrlData = {}
 
-    # Set up channel to controller to get interface with controller.
-    channel = grpc.insecure_channel(f'{current_app.config["UI_IP"]}:{current_app.config["UI_PORT"]}')
-    stub = ui_pb2_grpc.UiMessagesStub(channel)
-
     # If request is POST then check for button press or control.
     if request.method == 'POST':
         # Check for controller mode changes.
-        if request.form.get('MODEON') == "MODEON":
-            print("ON")
-        elif request.form.get('MODEOFF') == "MODEOFF":
-            print("OFF")
-        elif request.form.get('MODEAUTO') == "MODEAUTO":
-            print("AUTO")
-        elif request.form.get('MODEMANUAL') == "MODEMANUAL":
-            print("MANUAL")
-        # Set refresh rate to quick as assume must be connected.
-        updatePeriod = current_app.config["UI_REFRESH_PERIOD_FAST"]
+        reqMode = ""
+        if request.form.get('MODEON') == ControllerMode.ON.name:
+            reqMode = ControllerMode.ON.name
+        elif request.form.get('MODEOFF') == ControllerMode.OFF.name:
+            reqMode = ControllerMode.OFF.name
+        elif request.form.get('MODEAUTO') == ControllerMode.AUTO.name:
+            reqMode = ControllerMode.AUTO.name
+        elif request.form.get('MODEMANUAL') == ControllerMode.MANUAL.name:
+            reqMode = ControllerMode.MANUAL.name
 
-        # <TODO> Send command to set the mode if applicable.
+        # Set refresh rate to no delay.
+        # Will change after next GET when set slow/fast.
+        updatePeriod = 0
+
+        # Set up channel to controller to get interface with controller.
+        channel = grpc.insecure_channel(f'{current_app.config["UI_IP"]}:{current_app.config["UI_PORT"]}')
+        stub = ui_pb2_grpc.UiControlModeStub(channel)
+
         # Construct controller status request message object.
         setModeCmd = ui_pb2.SetControllerModeCmd()
         setModeCmd.cmd = ui_pb2.UiModeControl.C_SET_MODE
-        setModeCmd.reqMode = mode***********
+        setModeCmd.reqMode = reqMode
 
         try:
             # Send mode command to the server.
@@ -63,15 +68,19 @@ def index():
                 pass
                 # <TODO> error message.
 
-
         except grpc.RpcError as e:
             # Failed to receive response from server.
             pass
+            print("Server exception...")
 
-        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData)
+        return render_template('webUI/index.html', refresh=0, linkStale=staleData, cData=cntrlData)
 
     # If not POST then GET current page.
     else:
+        # Set up channel to controller to get interface with controller.
+        channel = grpc.insecure_channel(f'{current_app.config["UI_IP"]}:{current_app.config["UI_PORT"]}')
+        stub = ui_pb2_grpc.UiMessagesStub(channel)
+
         # Construct controller status request message object.
         getStatusCmd = ui_pb2.ControllerStatusCmd()
         getStatusCmd.cmd = ui_pb2.UiCmd.U_CNTRL_STATUS

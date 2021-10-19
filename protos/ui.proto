@@ -77,7 +77,7 @@ message SetControllerModeCmd {
 
 // Set controller mode RESPONSE message.
 message SetControllerModeResp {
-  UiModeControl status = 1;
+  UiModeStatus status = 1;
   string setMode = 2;
   string reason = 3;
 }

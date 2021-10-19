@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 from abc import ABC, abstractmethod
+from typing import Tuple
+
+import sprinklers.ui_pb2 as ui_pb2
 
 from generic.genericConstants import *
 
@@ -67,3 +70,24 @@ class GenericController():
         """
 
         pass
+
+    def setMode(self, reqMode: ControllerMode) -> Tuple[Enum, ControllerModeReason]:
+        """
+        Set the controller mode as required.
+        Parameters:
+            reqMode : Required controller mode (to set to).
+        """
+
+        # Initialise return status and failure reasons.
+        setStatus = ui_pb2.UiModeStatus.CS_GOOD
+        setReason = ControllerModeReason.NONE
+
+        # Only all mode change if controller status is active.
+        if self.state == ControllerState.ACTIVE:
+            self.mode = reqMode
+        else:
+            # Failed to set mode
+            setStatus = ui_pb2.UiModeStatus.CS_MODE_FAIL
+            setReason = ControllerModeReason.NOT_ACTIVE
+
+        return setStatus, setReason
