@@ -67,7 +67,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
                 # Respond to the UI.
                 # If successful mode is changed, reason code is blank.
                 resp = ui_pb2.SetControllerModeResp()
-                # resp.status = ui_pb2.UiModeStatus.Name(setStatus)
                 resp.status = setStatus
                 resp.setMode = self.ctrl.mode.name
                 resp.reason = setReason.name

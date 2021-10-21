@@ -40,9 +40,6 @@ class UIServer(Thread):
         Mainline will kill thread when self.stayAlive is False.
         """
 
-        self.log.debug("Starting UI server...")
-        print("Starting UI server...")
-
         # Configure and start the server to listen for messages from UI.
         # Add servicers for all UI services.
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

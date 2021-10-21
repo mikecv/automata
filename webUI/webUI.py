@@ -1,7 +1,6 @@
 import re
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
-import json
 import grpc
 import webUI.ui_pb2 as ui_pb2
 import webUI.ui_pb2_grpc as ui_pb2_grpc
@@ -65,8 +64,14 @@ def index():
                 pass
             else:
                 # Status was not good, so need to display an error to the user.
-                pass
-                # <TODO> error message.
+                # Set an error string that can be displayed on the UI.
+                if response.status == ui_pb2.UiModeStatus.CS_MODE_FAIL:
+                    if response.reason == ControllerModeReason.NOT_ACTIVE.name:
+                        error = "Controller must be in ACTIVE state to change mode."
+                        print(error)
+                    elif response.reason == ControllerModeReason.NO_CHANGE.name:
+                        error = "Attempting to change to current mode."                       
+                        print(error)
 
         except grpc.RpcError as e:
             # Failed to receive response from server.

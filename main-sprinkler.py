@@ -56,7 +56,7 @@ def main(cFile: str, lFile: str) -> None:
 
     # Create an instance of a UI server.
     # This will present controller data to UIs.
-    logger.info(f'Creating UI web server, and starting thread...')
+    logger.info(f'Creating UI web server, and starting thread.')
     ui = UIServer(cfg, logger, c)
     ui.start()
 
