@@ -18,6 +18,11 @@ def index():
 
     # If POST then perform any actions, e.g. set controller mode.
     # If controller action was successful then get current controller status before rendering.
+
+    # Initialise update period and controller status data in case no response from controller.
+    updatePeriod = current_app.config["UI_REFRESH_PERIOD_SLOW"]
+    cntrlData = {}
+
     if request.method == 'POST':
         # Check for controller mode changes.
         reqMode = ""

@@ -43,8 +43,8 @@ class UIServer(Thread):
         # Configure and start the server to listen for messages from UI.
         # Add servicers for all UI services.
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-        ui_pb2_grpc.add_UiMessagesServicer_to_server(UiCommands(self.cfg, self.ctrl), server)
-        ui_pb2_grpc.add_UiControlModeServicer_to_server(UiCommands(self.cfg, self.ctrl), server)
+        ui_pb2_grpc.add_UiMessagesServicer_to_server(UiCommands(self.cfg, self.log, self.ctrl), server)
+        ui_pb2_grpc.add_UiControlModeServicer_to_server(UiCommands(self.cfg, self.log, self.ctrl), server)
         server.add_insecure_port(f'[::]:{self.cfg.UI["UIPort"]}')
         server.start()
 
@@ -56,4 +56,5 @@ class UIServer(Thread):
         Method to stop serving UI data.
         """
 
+        self.log.debug(f'Killing off UI Server.')
         self.stayAlive = False

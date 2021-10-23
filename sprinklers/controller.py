@@ -23,7 +23,7 @@ class SprinklerController(GenericController, Thread):
         """
 
         # Super class initialisations.
-        GenericController.__init__(self, name)
+        GenericController.__init__(self, name, log)
         Thread.__init__(self)
 
         self.cfg = config
@@ -36,6 +36,8 @@ class SprinklerController(GenericController, Thread):
         Mainline will kill thread when self.stayAlive is False.
         """
 
+        self.log.debug(f'Controller thread running.')
+
         while self.stayAlive:
             # Check state in state machine.
             self.stateMachine()
@@ -44,6 +46,8 @@ class SprinklerController(GenericController, Thread):
         """
         Definition of abstract method to perform controlling functions.
         """
+
+        self.log.debug(f'Controller processing in ACTIVE mode.')
 
         while True:
 

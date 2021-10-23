@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from typing import Tuple
+import logging
 
 import sprinklers.ui_pb2 as ui_pb2
 
@@ -13,12 +14,18 @@ class GenericController():
     Class to represent a generic controller.
     """
 
-    def __init__(self, name) -> None:
+    def __init__(self, name: str, log: logging) -> None:
         """
         Initialisation method.
+        Parameters:
+            name : Name for this instance of generic controller.
+            log : Shared logging object.
         """
 
         self.ctrlName = name
+        self.log = log
+
+        self.log.debug(f'Initialise generic controller for controller : {name}')
 
         # Initialise state/mode of the controller.
         self.stayAlive = True
@@ -53,6 +60,8 @@ class GenericController():
         Initialise class variables and state.
         """
 
+        self.log.debug(f'Performing generic controller initialisation.')
+
         # Initialise stay alive flag.
         self.stayAlive = True
 
@@ -81,6 +90,8 @@ class GenericController():
             setReason : Enum representing reason (used if setStatus not CD_GOOD)
         """
 
+        self.log.debug(f'Implementing control to set mode to : {reqMode}')
+
         # Initialise return status and failure reasons.
         setStatus = ui_pb2.UiModeStatus.CS_GOOD
         setReason = ControllerModeReason.NONE
@@ -92,6 +103,7 @@ class GenericController():
                 # Not setting new mode as unchanged.
                 setStatus = ui_pb2.UiModeStatus.CS_MODE_FAIL
                 setReason = ControllerModeReason.NO_CHANGE
+                self.log.debug(f'Attempting to set mode to existing mode.')
             else:
                 # Setting new mode.
                 self.mode = reqMode
@@ -99,5 +111,6 @@ class GenericController():
             # Failed to set mode
             setStatus = ui_pb2.UiModeStatus.CS_MODE_FAIL
             setReason = ControllerModeReason.NOT_ACTIVE
+            self.log.warning(f'Failed to set mode as controller not ACTIVE.')
 
         return setStatus, setReason
