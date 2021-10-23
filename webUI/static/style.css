@@ -153,3 +153,7 @@ html {
     cursor: pointer;
     transition: ease .3s;
   }
+
+  .modebtn button:hover {
+    background-color: #187ec2;
+  }
