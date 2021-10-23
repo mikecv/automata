@@ -87,8 +87,8 @@ class UiControlModeStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SetController = channel.unary_unary(
-                '/ui.UiControlMode/SetController',
+        self.SetControllerMode = channel.unary_unary(
+                '/ui.UiControlMode/SetControllerMode',
                 request_serializer=ui__pb2.SetControllerModeCmd.SerializeToString,
                 response_deserializer=ui__pb2.SetControllerModeResp.FromString,
                 )
@@ -100,7 +100,7 @@ class UiControlModeServicer(object):
     *****************************************
     """
 
-    def SetController(self, request, context):
+    def SetControllerMode(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -109,8 +109,8 @@ class UiControlModeServicer(object):
 
 def add_UiControlModeServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SetController': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetController,
+            'SetControllerMode': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetControllerMode,
                     request_deserializer=ui__pb2.SetControllerModeCmd.FromString,
                     response_serializer=ui__pb2.SetControllerModeResp.SerializeToString,
             ),
@@ -128,7 +128,7 @@ class UiControlMode(object):
     """
 
     @staticmethod
-    def SetController(request,
+    def SetControllerMode(request,
             target,
             options=(),
             channel_credentials=None,
@@ -138,7 +138,7 @@ class UiControlMode(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ui.UiControlMode/SetController',
+        return grpc.experimental.unary_unary(request, target, '/ui.UiControlMode/SetControllerMode',
             ui__pb2.SetControllerModeCmd.SerializeToString,
             ui__pb2.SetControllerModeResp.FromString,
             options, channel_credentials,

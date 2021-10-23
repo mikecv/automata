@@ -29,6 +29,15 @@ class ControllerMode(Enum):
     MANUAL = 3
 
 
+class ControllerModeReason(Enum):
+    """
+    Controller mode (fail) reasons.
+    """
+    NONE = 0
+    NOT_ACTIVE = 1
+    NO_CHANGE = 2
+
+
 class ControllerScope(Enum):
     """
     Controller scope (redundancy).

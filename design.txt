@@ -23,6 +23,49 @@ The generic controller class has an abstract method called "controlling" that
 must be overridden in the specific controller class.
 
 --------------------------------------------------------------------------------
+2.1.1 - Contorller States and Modes
+--------------------------------------------------------------------------------
+
+A controller in be in one of a number of states according to the Enum
+ControllerState. The controller states are:
+
+    STARTING = 0
+    INITIALISING = 1
+    ACTIVE = 2
+    FAILED = 3
+    TERMINATING = 4
+
+The normal operation state for a controller is ACTIVE.
+In this state the controller is continuously executing its control functions,
+and listening to the UI so that it can provide status data, or perform
+control functions.
+
+In the active state a controller can be in one of the modes specified in Enum
+ControllerMode. The modes apply to when the controller is in the ACTIVE state
+and can be:
+
+    OFF = 0
+    ON = 1
+    AUTO = 2
+    MANUAL = 3
+
+--------------------------------------------------------------------------------
+2.1.2 - Contorller Status
+--------------------------------------------------------------------------------
+
+The controller listens for gRPC command GetControllerStatus on service
+UiMessages. The response includes all the controller state and operational data.
+
+--------------------------------------------------------------------------------
+2.1.3 - Contorl Functions
+--------------------------------------------------------------------------------
+
+The controller listens for gRPC call SetControllerMode on service
+UiControlMode. In the command the new mode for the controller is specified.
+The response includes the mode that the controller has been set to,
+as well as a status and fault reason if the command failed.
+
+--------------------------------------------------------------------------------
 2.2 - User Interface
 --------------------------------------------------------------------------------
 
@@ -38,9 +81,3 @@ the clients with particular controller and client data.
 
 Similarly, the controller is listening for control commands from the UI to
 perform specific control functions.
-
-The requesting of data from the controller is split into 2 messages.
-The first message is to get controller status. If there is a connection to the
-controller, then a second message is used to get the data for the controller.
-The controller data will be larger than the controller status so it is
-serialised by the controller, and then deserialised by the UI for display.

@@ -46,15 +46,17 @@ def main(cFile: str, lFile: str) -> None:
     logger.addHandler(handler)
 
     # Log program version.
-    logger.info(f"Program version : {progVersion}")
+    logger.info(f'Program version : {progVersion}')
 
     # Create an instance of a controller.
     # Controller is a threaded class so start the thread running.
+    logger.info(f'Creating controller, and starting thread : {cfg.ControllerName}')
     c = SprinklerController(cfg, logger, cfg.ControllerName)
     c.start()
 
     # Create an instance of a UI server.
     # This will present controller data to UIs.
+    logger.info(f'Creating UI web server, and starting thread.')
     ui = UIServer(cfg, logger, c)
     ui.start()
 
@@ -64,7 +66,7 @@ def main(cFile: str, lFile: str) -> None:
         pass
 
     # Controller not alive, so exit.
-    logger.info("Controller is dead!")
+    logger.info('Controller is dead!')
     exit(0)
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x08ui.proto\x12\x02ui\"-\n\x13\x43ontrollerStatusCmd\x12\x16\n\x03\x63md\x18\x01 \x01(\x0e\x32\t.ui.UiCmd\"\x97\x01\n\x14\x43ontrollerStatusResp\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.ui.StatusCmdStatus\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05state\x18\x03 \x01(\t\x12\r\n\x05\x63Time\x18\x04 \x01(\t\x12\x0c\n\x04mode\x18\x05 \x01(\t\x12\x0f\n\x07program\x18\x06 \x01(\t\x12\x0f\n\x07outputs\x18\x07 \x01(\t\"G\n\x14SetControllerModeCmd\x12\x1e\n\x03\x63md\x18\x01 \x01(\x0e\x32\x11.ui.UiModeControl\x12\x0f\n\x07reqMode\x18\x02 \x01(\t\"K\n\x15SetControllerModeResp\x12!\n\x06status\x18\x01 \x01(\x0e\x32\x11.ui.UiModeControl\x12\x0f\n\x07setMode\x18\x02 \x01(\t*\'\n\x05UiCmd\x12\n\n\x06U_NONE\x10\x00\x12\x12\n\x0eU_CNTRL_STATUS\x10\x01*[\n\x0fStatusCmdStatus\x12\x0b\n\x07US_NONE\x10\x00\x12\x0b\n\x07US_GOOD\x10\x01\x12\x15\n\x11US_UNEXPECTED_CMD\x10\x62\x12\x17\n\x13US_SERVER_EXCEPTION\x10\x63*+\n\rUiModeControl\x12\n\n\x06\x43_NONE\x10\x00\x12\x0e\n\nC_SET_MODE\x10\x01*X\n\x0cUiModeStatus\x12\x0b\n\x07\x43S_NONE\x10\x00\x12\x0b\n\x07\x43S_GOOD\x10\x01\x12\x15\n\x11\x43S_UNEXPECTED_CMD\x10\x62\x12\x17\n\x13\x43S_SERVER_EXCEPTION\x10\x63\x32X\n\nUiMessages\x12J\n\x13GetControllerStatus\x12\x17.ui.ControllerStatusCmd\x1a\x18.ui.ControllerStatusResp\"\x00\x32W\n\rUiControlMode\x12\x46\n\rSetController\x12\x18.ui.SetControllerModeCmd\x1a\x19.ui.SetControllerModeResp\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x08ui.proto\x12\x02ui\"-\n\x13\x43ontrollerStatusCmd\x12\x16\n\x03\x63md\x18\x01 \x01(\x0e\x32\t.ui.UiCmd\"\x97\x01\n\x14\x43ontrollerStatusResp\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.ui.StatusCmdStatus\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05state\x18\x03 \x01(\t\x12\r\n\x05\x63Time\x18\x04 \x01(\t\x12\x0c\n\x04mode\x18\x05 \x01(\t\x12\x0f\n\x07program\x18\x06 \x01(\t\x12\x0f\n\x07outputs\x18\x07 \x01(\t\"G\n\x14SetControllerModeCmd\x12\x1e\n\x03\x63md\x18\x01 \x01(\x0e\x32\x11.ui.UiModeControl\x12\x0f\n\x07reqMode\x18\x02 \x01(\t\"Z\n\x15SetControllerModeResp\x12 \n\x06status\x18\x01 \x01(\x0e\x32\x10.ui.UiModeStatus\x12\x0f\n\x07setMode\x18\x02 \x01(\t\x12\x0e\n\x06reason\x18\x03 \x01(\t*\'\n\x05UiCmd\x12\n\n\x06U_NONE\x10\x00\x12\x12\n\x0eU_CNTRL_STATUS\x10\x01*[\n\x0fStatusCmdStatus\x12\x0b\n\x07US_NONE\x10\x00\x12\x0b\n\x07US_GOOD\x10\x01\x12\x15\n\x11US_UNEXPECTED_CMD\x10\x62\x12\x17\n\x13US_SERVER_EXCEPTION\x10\x63*+\n\rUiModeControl\x12\n\n\x06\x43_NONE\x10\x00\x12\x0e\n\nC_SET_MODE\x10\x01*z\n\x0cUiModeStatus\x12\x0b\n\x07\x43S_NONE\x10\x00\x12\x0b\n\x07\x43S_GOOD\x10\x01\x12\x0e\n\nCS_MODE_NA\x10\x02\x12\x10\n\x0c\x43S_MODE_FAIL\x10\x03\x12\x15\n\x11\x43S_UNEXPECTED_CMD\x10\x62\x12\x17\n\x13\x43S_SERVER_EXCEPTION\x10\x63\x32X\n\nUiMessages\x12J\n\x13GetControllerStatus\x12\x17.ui.ControllerStatusCmd\x1a\x18.ui.ControllerStatusResp\"\x00\x32[\n\rUiControlMode\x12J\n\x11SetControllerMode\x12\x18.ui.SetControllerModeCmd\x1a\x19.ui.SetControllerModeResp\"\x00\x62\x06proto3'
 )
 
 _UICMD = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _UICMD = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=367,
-  serialized_end=406,
+  serialized_start=382,
+  serialized_end=421,
 )
 _sym_db.RegisterEnumDescriptor(_UICMD)
 
@@ -79,8 +79,8 @@ _STATUSCMDSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=408,
-  serialized_end=499,
+  serialized_start=423,
+  serialized_end=514,
 )
 _sym_db.RegisterEnumDescriptor(_STATUSCMDSTATUS)
 
@@ -105,8 +105,8 @@ _UIMODECONTROL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=501,
-  serialized_end=544,
+  serialized_start=516,
+  serialized_end=559,
 )
 _sym_db.RegisterEnumDescriptor(_UIMODECONTROL)
 
@@ -129,20 +129,30 @@ _UIMODESTATUS = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CS_UNEXPECTED_CMD', index=2, number=98,
+      name='CS_MODE_NA', index=2, number=2,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CS_SERVER_EXCEPTION', index=3, number=99,
+      name='CS_MODE_FAIL', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CS_UNEXPECTED_CMD', index=4, number=98,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CS_SERVER_EXCEPTION', index=5, number=99,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=546,
-  serialized_end=634,
+  serialized_start=561,
+  serialized_end=683,
 )
 _sym_db.RegisterEnumDescriptor(_UIMODESTATUS)
 
@@ -157,6 +167,8 @@ C_NONE = 0
 C_SET_MODE = 1
 CS_NONE = 0
 CS_GOOD = 1
+CS_MODE_NA = 2
+CS_MODE_FAIL = 3
 CS_UNEXPECTED_CMD = 98
 CS_SERVER_EXCEPTION = 99
 
@@ -329,6 +341,13 @@ _SETCONTROLLERMODERESP = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='ui.SetControllerModeResp.reason', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -342,13 +361,13 @@ _SETCONTROLLERMODERESP = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=290,
-  serialized_end=365,
+  serialized_end=380,
 )
 
 _CONTROLLERSTATUSCMD.fields_by_name['cmd'].enum_type = _UICMD
 _CONTROLLERSTATUSRESP.fields_by_name['status'].enum_type = _STATUSCMDSTATUS
 _SETCONTROLLERMODECMD.fields_by_name['cmd'].enum_type = _UIMODECONTROL
-_SETCONTROLLERMODERESP.fields_by_name['status'].enum_type = _UIMODECONTROL
+_SETCONTROLLERMODERESP.fields_by_name['status'].enum_type = _UIMODESTATUS
 DESCRIPTOR.message_types_by_name['ControllerStatusCmd'] = _CONTROLLERSTATUSCMD
 DESCRIPTOR.message_types_by_name['ControllerStatusResp'] = _CONTROLLERSTATUSRESP
 DESCRIPTOR.message_types_by_name['SetControllerModeCmd'] = _SETCONTROLLERMODECMD
@@ -396,8 +415,8 @@ _UIMESSAGES = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=636,
-  serialized_end=724,
+  serialized_start=685,
+  serialized_end=773,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetControllerStatus',
@@ -422,12 +441,12 @@ _UICONTROLMODE = _descriptor.ServiceDescriptor(
   index=1,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=726,
-  serialized_end=813,
+  serialized_start=775,
+  serialized_end=866,
   methods=[
   _descriptor.MethodDescriptor(
-    name='SetController',
-    full_name='ui.UiControlMode.SetController',
+    name='SetControllerMode',
+    full_name='ui.UiControlMode.SetControllerMode',
     index=0,
     containing_service=None,
     input_type=_SETCONTROLLERMODECMD,

@@ -1,59 +1,56 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
-import json
-import grpc
-import webUI.ui_pb2 as ui_pb2
-import webUI.ui_pb2_grpc as ui_pb2_grpc
 
 from flask import current_app
 from webUI.auth import login_required
 from webUI.db import get_db
 
+from generic.genericConstants import *
+from webUI.uiUtilities import *
+
 bp = Blueprint('webUI', __name__)
 
-@bp.route('/')
+@bp.route('/', methods=['GET', 'POST'])
 def index():
     """
     Index (start) page for webUI.
     """
 
-    # Set up channel to controller to get status information.
-    channel = grpc.insecure_channel(f'{current_app.config["UI_IP"]}:{current_app.config["UI_PORT"]}')
-    stub = ui_pb2_grpc.UiMessagesStub(channel)
+    # If POST then perform any actions, e.g. set controller mode.
+    # If controller action was successful then get current controller status before rendering.
+    if request.method == 'POST':
+        # Check for controller mode changes.
+        reqMode = ""
+        if request.form.get('MODEON') == ControllerMode.ON.name:
+            reqMode = ControllerMode.ON.name
+        elif request.form.get('MODEOFF') == ControllerMode.OFF.name:
+            reqMode = ControllerMode.OFF.name
+        elif request.form.get('MODEAUTO') == ControllerMode.AUTO.name:
+            reqMode = ControllerMode.AUTO.name
+        elif request.form.get('MODEMANUAL') == ControllerMode.MANUAL.name:
+            reqMode = ControllerMode.MANUAL.name
 
-    # Construct controller status request message object.
-    getStatusCmd = ui_pb2.ControllerStatusCmd()
-    getStatusCmd.cmd = ui_pb2.UiCmd.U_CNTRL_STATUS
+        # Set message to controller to set the mode.
+        staleData, isError = setControllerMode(reqMode)
 
-    # Initialise flag for stale data,
-    # i.e. if no or failed status response from controller.
-    staleData = True
-    cntrlData = {}
+        # If controller action was successful then get controller status.
+        if staleData == False:
+            # Get the latest controller data.
+            staleData, cntrlData, updatePeriod = getControllerStatus()
 
-    # Initialise web page refresh rate to slow.
-    # If connected to a controller then can speed up.
-    updatePeriod = current_app.config["UI_REFRESH_PERIOD_SLOW"]
-    try:
-        # Send status request command to the server.
-        response = stub.GetControllerStatus(getStatusCmd)
+            # If there was an error when doing the controller action,
+            # then overwrite the update / represh period to give more time for the alert.
+            if isError == True:
+                updatePeriod = current_app.config["UI_REFRESH_PERIOD_SLOW"]
 
-        if response.status == ui_pb2.StatusCmdStatus.US_GOOD:
-            # Status response good, so update controller status object.
-            staleData = False
-            cntrlData = {
-                "name" : response.name,
-                "state" : response.state,
-                "cTime" : response.cTime,
-                "mode" : response.mode,
-                "program" : response.program,
-                "outputs" : response.outputs
-            }
+        # Render the web page with controller data,
+        # taking into account any action to change modes.
+        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData)
+    else:
+        # Request is for a GET so just get controller status.
+        # Get the latest controller data.
+        staleData, cntrlData, updatePeriod = getControllerStatus()
 
-            # Speed up web page refresh rate now that we are connected.
-            updatePeriod = current_app.config["UI_REFRESH_PERIOD_FAST"]
-
-    except grpc.RpcError as e:
-        # Failed to receive response from server.
-        pass
-
-    return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData)
+        # Render the web page with controller data,
+        # taking into account any action to change modes.
+        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData)

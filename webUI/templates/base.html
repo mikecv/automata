@@ -1,5 +1,5 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - MicControl</title>
+<title>{% block title %}{% endblock %} - Automata</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
   <h1>Automata</h1>
@@ -17,8 +17,8 @@
   <header>
     {% block header %}{% endblock %}
   </header>
+  {% block content %}{% endblock %}
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
-  {% block content %}{% endblock %}
 </section>
