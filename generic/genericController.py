@@ -22,15 +22,15 @@ class GenericController():
             log : Shared logging object.
         """
 
-        self.ctrlName = name
+        self._ctrlName = name
         self.log = log
 
         self.log.debug(f'Initialise generic controller for controller : {name}')
 
         # Initialise state/mode of the controller.
-        self.stayAlive = True
-        self.state = ControllerState.STARTING
-        self.mode = ControllerMode.OFF
+        self._stayAlive = True
+        self._state = ControllerState.STARTING
+        self._mode = ControllerMode.OFF
 
         # Initialise controller program to empty.
         # <TODO> Array of program entries.
@@ -39,6 +39,62 @@ class GenericController():
         # Initialise controller output states.
         # <TODO> this will be an object of an outputs class.
         self.outputs = "All Off"
+
+    @property
+    def ctrlName(self) -> None:
+        """
+        Getter property for controller name.
+        """
+        return self._ctrlName
+
+    @property
+    def stayAlive(self) -> None:
+        """
+        Getter property for controller stayAlive flag.
+        """
+        return self._stayAlive
+
+    @property
+    def state(self) -> None:
+        """
+        Getter property for controller state.
+        """
+        return self._state
+
+    @property
+    def mode(self) -> None:
+        """
+        Getter property for controller mode.
+        """
+        return self._mode
+
+    @ctrlName.setter
+    def ctrlName(self, n) -> None:
+        """
+        Setter property for controller name.
+        """
+        self._ctrlName = n
+
+    @stayAlive.setter
+    def stayAlive(self, saf) -> None:
+        """
+        Setter property for controller stayAlive flag.
+        """
+        self._stayAlive = saf
+
+    @state.setter
+    def state(self, s) -> None:
+        """
+        Setter property for controller state.
+        """
+        self._state = s
+
+    @mode.setter
+    def mode(self, m) -> None:
+        """
+        Setter property for controller mode.
+        """
+        self._mode = m
 
     def stateMachine(self) -> None:
         """
