@@ -18,8 +18,9 @@ from sprinklers.uiServer import *
 # *******************************************
 # TODO List
 #
-# pylint.
 # Write unit tests.
+# Add Input/Output functionality.
+# Add program/scheduling functionality.
 # *******************************************
 
 # Program name, version, and date.
