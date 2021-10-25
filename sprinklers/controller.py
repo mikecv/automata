@@ -5,6 +5,7 @@ import logging
 import time
 
 from generic.genericController import *
+from sprinklers.digitalInput import *
 from sprinklers.config import *
 
 class SprinklerController(GenericController, Thread):   
@@ -22,12 +23,18 @@ class SprinklerController(GenericController, Thread):
             name : Name of the controller.
         """
 
+        self.cfg = config
+        self.log = log
+
         # Super class initialisations.
         GenericController.__init__(self, name, log)
         Thread.__init__(self)
 
-        self.cfg = config
-        self.log = log
+        # <TEST>
+        # Create digital input.
+        di1 = DigitalInput(self.log, ActiveState.ACTIVE_HIGH)
+        print(di1.active)
+        print(di1.level)
 
     def run(self) -> None:
         """

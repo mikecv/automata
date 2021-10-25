@@ -33,8 +33,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
         Respond to controller status request from UI.
         """
 
-        self.log.debug(f'Received controller command to send controller status data.')
-
         if request.cmd == ui_pb2.UiCmd.U_CNTRL_STATUS:
             try:
                 # Respond to the UI.
@@ -65,8 +63,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
         """
         Respond to controller mode set request from UI.
         """
-
-        self.log.debug(f'Received controller command to set controller mode.')
 
         if request.cmd == ui_pb2.UiModeControl.C_SET_MODE:
             try:

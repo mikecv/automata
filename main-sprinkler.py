@@ -9,6 +9,7 @@ import os
 from sprinklers.config import *
 from sprinklers.controller import *
 from sprinklers.uiServer import *
+from utils.filePaths import *
 
 # *******************************************
 # Program history.
@@ -36,6 +37,10 @@ def main(cFile: str, lFile: str) -> None:
         cFile : Json configuration file.
         lFile : Program log file.
     """
+
+    # Check if paths for config and logs exists and create if not.
+    chkPath(cFile)
+    chkPath(lFile)
 
     # Create configuration values class object.
     cfg = Config(cFile)

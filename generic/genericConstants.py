@@ -44,3 +44,29 @@ class ControllerScope(Enum):
     """
     STANDBY = 0
     PRIMARY = 1
+
+
+class IOType(Enum):
+    """
+    Input/OUtput types
+    """
+    DIGITAL_INPUT = 0
+    DIGITAL_OUTPUT = 1
+    ANALOG_INPUT = 2
+    ANALOG_OUTPUT = 3
+
+
+class ActiveState(Enum):
+    """
+    Digital IO active state
+    """
+    ACTIVE_LOW = 0
+    ACTIVE_HIGH = 1
+
+
+class Level(Enum):
+    """
+    Digital IO level
+    """
+    LOW = 0
+    HIGH = 1
