@@ -1,0 +1,9 @@
+{
+    "GroupName": "Input",
+    "Inputs": [
+        {
+            "Name": "RAIN SENSOR",
+            "ValidState": 1
+        }
+    ]
+}

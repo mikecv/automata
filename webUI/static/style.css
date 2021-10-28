@@ -157,3 +157,17 @@ html {
   .modebtn button:hover {
     background-color: #187ec2;
   }
+
+  .modebtnDisabled button[type=submit] {
+    display: inline-block;
+    padding: 0 0;
+    background: rgb(17, 156, 36);
+    font-weight: bold;
+    color: rgb(219, 232, 220);
+    border: 2px solid rgb(5, 36, 15);
+    border-radius: 3px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    transition: ease .3s;
+  }

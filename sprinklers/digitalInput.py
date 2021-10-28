@@ -2,25 +2,37 @@
 
 import logging
 
-from generic.genericIO import *
+from generic.genericDigitalInput import *
 from sprinklers.config import *
 
-class DigitalInput(GenericIO):   
+class DigitalInput(GenericDigitalInput):   
     """
     Class to represent a controller digital input.
-    Derive from a generic input/output (IO) class.
+    Derive from a generic input class.
     """
 
-    def __init__(self, log: logging, activeState: ActiveState) -> None:
+    def __init__(self, log: logging, inputName: str, activeState: ActiveState) -> None:
         """
         Initialisation method.
         Parameters:
             log : Mainline logging object.
+            inputName : Name for this input.
             activeState : Active state, high or low.
         """
 
         self.log = log
 
         # Super class initialisations.
-        # Initialise input type to digital input.
-        GenericIO.__init__(self, log, IOType.DIGITAL_INPUT, activeState)
+        # Initialise digital input with active state.
+        GenericDigitalInput.__init__(self, log, activeState)
+
+        # Initialise specific class variables.
+        self.inputName = inputName
+
+    def readDigitalInput(self) -> None:
+        """
+        Definition of abstract method to read digital input.
+        """
+
+        # <TODO>
+        self.level = Level.LOW

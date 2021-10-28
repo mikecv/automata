@@ -36,6 +36,10 @@ class GenericController():
         # <TODO> Array of program entries.
         self.program = "Empty"
 
+        # Initialise controller input states.
+        # <TODO> this will be an object of an inputs class.
+        self.inputs = "All Off"
+
         # Initialise controller output states.
         # <TODO> this will be an object of an outputs class.
         self.outputs = "All Off"

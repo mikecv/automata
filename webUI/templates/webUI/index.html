@@ -32,36 +32,56 @@
               <th><a>Mode</a></th>
               <th><a-dyn>{{ cData["mode"] }}</a-dyn></th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "ON" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="ON" name="MODEON">ON</button>
+                    {% if cData["mode"] == "ON" %}
+                      <button type="submit" value="ON" name="MODEON" disabled>ON</button>
+                    {% else %}
+                      <button type="submit" value="ON" name="MODEON">ON</button>
+                    {% endif %}
                   </form>
                 </div>
               </th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "OFF" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="OFF" name="MODEOFF">OFF</button>
-                  <form>
+                    {% if cData["mode"] == "OFF" %}
+                      <button type="submit" value="OFF" name="MODEOFF" disabled>OFF</button>
+                    {% else %}
+                      <button type="submit" value="OFF" name="MODEOFF">OFF</button>
+                    {% endif %}
+                  </form>
                 </div>
               </th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "AUTO" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="AUTO" name="MODEAUTO">AUTO</button>
-                  <form>
+                    {% if cData["mode"] == "AUTO" %}
+                      <button type="submit" value="AUTO" name="MODEAUTO" disabled>AUTO</button>
+                    {% else %}
+                      <button type="submit" value="AUTO" name="MODEAUTO">AUTO</button>
+                    {% endif %}
+                  </form>
                 </div>
               </th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "MANUAL" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="MANUAL" name="MODEMANUAL">MANUAL</button>
-                  <form>
+                    {% if cData["mode"] == "MANUAL" %}
+                      <button type="submit" value="MANUAL" name="MODEMANUAL" disabled>MANUAL</button>
+                    {% else %}
+                      <button type="submit" value="MANUAL" name="MODEMANUAL">MANUAL</button>
+                    {% endif %}
+                  </form>
                 </div>
               </th>
             <tr>
               <th><a>Program</a></th>
               <th><a-dyn>{{ cData["program"] }}</a-dyn></th>
+            </tr>
+            <tr>
+              <th><a>Inputs</a></th>
+              <th><a-dyn>{{ cData["inputs"] }}</a-dyn></th>
             </tr>
             <tr>
               <th><a>Outputs</a></th>

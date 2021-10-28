@@ -102,6 +102,7 @@ def getControllerStatus() -> Tuple[bool, dict, int]:
                 "cTime" : response.cTime,
                 "mode" : response.mode,
                 "program" : response.program,
+                "inputs" : response.inputs,
                 "outputs" : response.outputs
             }
 

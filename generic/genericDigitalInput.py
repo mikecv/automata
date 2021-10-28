@@ -6,30 +6,25 @@ import logging
 from generic.genericConstants import *
 
 
-class GenericIO():   
+class GenericDigitalInput():   
     """
-    Class to represent a generic Input/Output (I/O).
+    Class to represent a generic digital input.
     """
 
-    def __init__(self, log: logging, ioType: IOType, activeState: ActiveState) -> None:
+    def __init__(self, log: logging, activeState: ActiveState) -> None:
         """
         Initialisation method.
         Parameters:
             log : Shared logging object.
-            ioType : Input/Output type.
             activeState : Active state, high or low.
         """
 
         self.log = log
 
         # Initialise IO.
-        self.ioType = ioType
         self.activeState = activeState
         self._active = False
         self._level = Level.LOW
-
-        # Initialise digital input.
-        self.initialise()    
 
     @property
     def active(self) -> None:
@@ -67,14 +62,12 @@ class GenericIO():
             else:
                 self._active = True
 
-    def initialise(self) -> None:
+    @abstractmethod
+    def readDigitalInput(self) -> None:
         """
-        Initialise Input/Output (I/O).
+        Abstract method to read digital input.
+        This method must be overriden by specific digital input class,
+        as will be hardware specific.
         """
 
-        self.log.debug(f'Performing generic IO initialisation for : {self.ioType}')
-        
-        # Initialise input to low level state.
-        # The setter property should set the active state accordingly.
-        self.level = Level.LOW
-
+        pass

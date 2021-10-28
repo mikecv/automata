@@ -30,17 +30,19 @@ progVersion = "0.1"
 progDate = "2021"
 
 # Program main.
-def main(cFile: str, lFile: str) -> None:
+def main(cFile: str, lFile: str, iFile: str) -> None:
     """
     Controller mainline.
     Parameters:
         cFile : Json configuration file.
         lFile : Program log file.
+        iFile : Inputs configuration file.
     """
 
     # Check if paths for config and logs exists and create if not.
     chkPath(cFile)
     chkPath(lFile)
+    chkPath(iFile)
 
     # Create configuration values class object.
     cfg = Config(cFile)
@@ -59,7 +61,7 @@ def main(cFile: str, lFile: str) -> None:
     # Create an instance of a controller.
     # Controller is a threaded class so start the thread running.
     logger.info(f'Creating controller, and starting thread : {cfg.ControllerName}')
-    c = SprinklerController(cfg, logger, cfg.ControllerName)
+    c = SprinklerController(cfg, logger, cfg.ControllerName, iFile)
     c.start()
 
     # Create an instance of a UI server.
@@ -82,6 +84,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sprinkler Controller.")
     parser.add_argument("-c", "--config", help="Json configuration file.")
     parser.add_argument("-l", "--log", help="Log file.")
+    parser.add_argument("-i", "--inputs", help="Json inputs configuration file.")
     parser.add_argument("-v", "--version", help="Program version.", action="store_true")
     args = parser.parse_args()
 
@@ -93,9 +96,12 @@ if __name__ == "__main__":
         # Use default config & log file names if not specified.
         cFile = os.path.join("./config", progName + "." + "json")
         lFile = os.path.join("./logs", progName + "." + "log")
+        iFile = os.path.join("./config", "inputs.json")
 
         if args.config:
             cFile = args.config
         if args.log:
             lFile = args.log
-        main(cFile, lFile)
+        if args.inputs:
+            iFile = args.inputs
+        main(cFile, lFile, iFile)
