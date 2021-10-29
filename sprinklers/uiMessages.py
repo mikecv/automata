@@ -42,9 +42,10 @@ class UiCommands(ui_pb2_grpc.UiMessages):
                 resp.state = self.ctrl.state.name
                 resp.cTime = datetime.now().strftime("%H:%M:%S")
                 resp.mode = self.ctrl.mode.name
+                # <TODO> Update with packed program info.
                 resp.program = self.ctrl.program
-                resp.inputs = self.ctrl.inputs
-                resp.outputs = self.ctrl.outputs
+                resp.inputs = self.ctrl.packedDigIns
+                resp.outputs = self.ctrl.packedDigOuts
                 return resp
 
             except grpc.RpcError as e:

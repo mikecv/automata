@@ -34,7 +34,7 @@ class SprinklerController(GenericController, Thread):
 
         # Import the inputs (IO) configuration file.
         # Some of the configuration data is generic IO and some is specific to this implementation.
-        self.digitalInputs = []
+        # The arrays of digital IO is initialised in the generic classes.
         try:
             with open(iFile) as inputsConfig:
                 ic = json.load(inputsConfig)
@@ -52,6 +52,9 @@ class SprinklerController(GenericController, Thread):
         except Exception:
             # Failed to import inputs configuration file.
             self.log.error(f'Failed to import inputs configuration file.')
+
+        # <TODO> Temporary set of digital input for test.
+        self.digitalInputs[1].level = Level.HIGH
 
     def run(self) -> None:
         """

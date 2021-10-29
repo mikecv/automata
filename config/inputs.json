@@ -4,6 +4,14 @@
         {
             "Name": "RAIN SENSOR",
             "ValidState": 1
+        },
+        {
+            "Name": "SNOW DETECTOR",
+            "ValidState": 0
+        },
+        {
+            "Name": "TORNADO SENSOR",
+            "ValidState": 0
         }
     ]
 }

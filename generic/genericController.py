@@ -38,11 +38,11 @@ class GenericController():
 
         # Initialise controller input states.
         # <TODO> this will be an object of an inputs class.
-        self.inputs = "All Off"
+        self.digitalInputs = []
 
         # Initialise controller output states.
         # <TODO> this will be an object of an outputs class.
-        self.outputs = "All Off"
+        self.digitalOutputs = []
 
     @property
     def ctrlName(self) -> None:
@@ -99,6 +99,48 @@ class GenericController():
         Setter property for controller mode.
         """
         self._mode = m
+
+    @property
+    def packedDigIns(self) -> int:
+        """
+        Getter property to get packed digital inputs.
+        Pack digital inputs bitwise into an integer.
+        Reverse the list so that first item in list accounts for least significant bit.
+        Assumes digitals with boolean property .active (refering to signal state).
+        """
+
+        # Initialise packed digital ints and bit index.
+        digPacked = 0
+        bitIndex = 1
+
+        # Go through digital IO bit by bit (in reverse).
+        for d in reversed(self.digitalInputs):
+            if d.active:
+                digPacked = digPacked | bitIndex
+            bitIndex = bitIndex << 1
+
+        return digPacked
+
+    @property
+    def packedDigOuts(self) -> int:
+        """
+        Getter property to get packed digital outpus.
+        Pack digital outputs bitwise into an integer.
+        Reverse the list so that first item in list accounts for least significant bit.
+        Assumes digitals with boolean property .active (refering to signal state).
+        """
+
+        # Initialise packed digital ints and bit index.
+        digPacked = 0
+        bitIndex = 1
+
+        # Go through digital IO bit by bit (in reverse).
+        for d in reversed(self.digitalOutputs):
+            if d.active:
+                digPacked = digPacked | bitIndex
+            bitIndex = bitIndex << 1
+
+        return digPacked
 
     def stateMachine(self) -> None:
         """
