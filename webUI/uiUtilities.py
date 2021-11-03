@@ -4,6 +4,8 @@ from typing import Tuple
 
 from flask import flash
 import grpc
+import json
+
 import webUI.ui_pb2 as ui_pb2
 import webUI.ui_pb2_grpc as ui_pb2_grpc
 
@@ -60,12 +62,14 @@ def setControllerMode(reqMode: str) -> Tuple[bool, bool]:
 
     return staleData, isError
 
-def getControllerStatus() -> Tuple[bool, dict, int]:
+def getControllerStatus() -> Tuple[bool, dict, dict, dict, int]:
     """
     Get the controller status.
     Returns:
         staleData : Flag if controller responded or not
         cntrlData : Controller status data.
+        inputData : Controller input dacntrlDatata.
+        outputData : Controller outputs dacntrlDatata.
         updatePeriod : UI update / refresh period.
     """
 
@@ -75,8 +79,10 @@ def getControllerStatus() -> Tuple[bool, dict, int]:
     # Initialise flag for stale data,
     staleData = True
 
-    #Initialise controller data flag.
+    #Initialise controller and input data.
     cntrlData = {}
+    inputData = {}
+    outputData = {}
 
     # Set up channel to controller to get interface with controller.
     channel = grpc.insecure_channel(f'{current_app.config["UI_IP"]}:{current_app.config["UI_PORT"]}')
@@ -101,16 +107,19 @@ def getControllerStatus() -> Tuple[bool, dict, int]:
                 "state" : response.state,
                 "cTime" : response.cTime,
                 "mode" : response.mode,
-                "program" : response.program,
-                "inputs" : response.inputs,
-                "outputs" : response.outputs
+                "program" : response.program
             }
+            inputData = json.loads(response.inputs)
+            outputData = json.loads(response.outputs)
 
             # Speed up web page refresh rate now that we are connected.
             updatePeriod = current_app.config["UI_REFRESH_PERIOD_FAST"]
+        else:
+            # Failed to get good status from controller.
+            print("Failed to get good status from controller.")
 
     except grpc.RpcError as e:
         # Failed to receive response from server.
         pass
 
-    return staleData, cntrlData, updatePeriod
+    return staleData, cntrlData, inputData, outputData, updatePeriod

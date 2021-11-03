@@ -24,7 +24,7 @@ class Config():
         self.cf = configFile
 
         # Version of configuration.
-        self.ConfigVersion = 1
+        self.ConfigVersion = 0
 
         # Custom controller details.
         self.ControllerName = "Garden Reticulation"
@@ -38,6 +38,7 @@ class Config():
         # Timers.
         self.Timers = {
             "MainSleep" : 1.0,
+            "ControllerSleep" : 5.0
         }
 
         # gRPC settings.
@@ -108,6 +109,12 @@ class Config():
                     self.Timers["MainSleep"] = config["Timers"]["MainSleep"]
                 except Exception:
                     self.Timers["MainSleep"] = paramSaved
+                    updateConfig = True
+                try:
+                    paramSaved = self.Timers["ControllerSleep"]
+                    self.Timers["ControllerSleep"] = config["Timers"]["ControllerSleep"]
+                except Exception:
+                    self.Timers["ControllerSleep"] = paramSaved
                     updateConfig = True
                 try:
                     paramSaved = self.GRPC["ListenPort"]

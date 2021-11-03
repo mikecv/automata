@@ -1,0 +1,50 @@
+{
+    "GroupName": "Stations",
+    "IO": [
+        {
+            "Name": "MASTER",
+            "activeLevel": "ACTIVE_LOW",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "1",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "2",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "3",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "4",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "5",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "6",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "7",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        },
+        {
+            "Name": "8",
+            "activeLevel": "ACTIVE_HIGH",
+            "InitLevel": "LOW"
+        }
+    ]
+}

@@ -37,11 +37,9 @@ class GenericController():
         self.program = "Empty"
 
         # Initialise controller input states.
-        # <TODO> this will be an object of an inputs class.
         self.digitalInputs = []
 
         # Initialise controller output states.
-        # <TODO> this will be an object of an outputs class.
         self.digitalOutputs = []
 
     @property
@@ -107,9 +105,11 @@ class GenericController():
         Pack digital inputs bitwise into an integer.
         Reverse the list so that first item in list accounts for least significant bit.
         Assumes digitals with boolean property .active (refering to signal state).
+
+        This property not currently used but may be useful in the future.
         """
 
-        # Initialise packed digital ints and bit index.
+        # Initialise packed digital ins and bit index.
         digPacked = 0
         bitIndex = 1
 
@@ -128,9 +128,11 @@ class GenericController():
         Pack digital outputs bitwise into an integer.
         Reverse the list so that first item in list accounts for least significant bit.
         Assumes digitals with boolean property .active (refering to signal state).
+
+        This property not currently used but may be useful in the future.
         """
 
-        # Initialise packed digital ints and bit index.
+        # Initialise packed digital outs and bit index.
         digPacked = 0
         bitIndex = 1
 
@@ -184,7 +186,7 @@ class GenericController():
 
     def setMode(self, reqMode: ControllerMode) -> Tuple[Enum, ControllerModeReason]:
         """
-        Set the controller mode as required.
+        SeoFilet the controller mode as required.
         Parameters:
             reqMode : Required controller mode (to set to).
         Returns:

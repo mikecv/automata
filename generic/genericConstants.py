@@ -46,9 +46,17 @@ class ControllerScope(Enum):
     PRIMARY = 1
 
 
-class ActiveState(Enum):
+class DigtialIoType(Enum):
     """
-    Digital IO active state
+    Digital IO type (input or output)
+    """
+    DIGITAL_INPUT = 0
+    DIGITAL_OUTPUT = 1
+
+
+class ActiveLevel(Enum):
+    """
+    Digital IO active level
     """
     ACTIVE_LOW = 0
     ACTIVE_HIGH = 1

@@ -39,8 +39,8 @@ message ControllerStatusResp {
   string cTime = 4;
   string mode = 5;
   string program = 6;
-  uint32 inputs = 7;
-  uint32 outputs = 8;
+  string inputs = 7;
+  string outputs = 8;
 }
 
 

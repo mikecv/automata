@@ -1,17 +1,17 @@
 {
-    "GroupName": "Input",
-    "Inputs": [
+    "GroupName": "Inputs",
+    "IO": [
         {
-            "Name": "RAIN SENSOR",
-            "ValidState": 1
+            "Name": "RAIN",
+            "activeLevel": "ACTIVE_HIGH"
         },
         {
-            "Name": "SNOW DETECTOR",
-            "ValidState": 0
+            "Name": "SNOW",
+            "activeLevel": "ACTIVE_HIGH"
         },
         {
-            "Name": "TORNADO SENSOR",
-            "ValidState": 0
+            "Name": "TORNADO",
+            "activeLevel": "ACTIVE_LOW"
         }
     ]
 }
