@@ -22,6 +22,8 @@ def index():
     # Initialise update period and controller status data in case no response from controller.
     updatePeriod = current_app.config["UI_REFRESH_PERIOD_SLOW"]
     cntrlData = {}
+    inputData = {}
+    outputData = {}
 
     if request.method == 'POST':
         # Check for controller mode changes.
@@ -41,7 +43,7 @@ def index():
         # If controller action was successful then get controller status.
         if staleData == False:
             # Get the latest controller data.
-            staleData, cntrlData, updatePeriod = getControllerStatus()
+            staleData, cntrlData, inputData, outputData, updatePeriod = getControllerStatus()
 
             # If there was an error when doing the controller action,
             # then overwrite the update / represh period to give more time for the alert.
@@ -50,12 +52,12 @@ def index():
 
         # Render the web page with controller data,
         # taking into account any action to change modes.
-        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData)
+        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData, iData=inputData, oData=outputData)
     else:
         # Request is for a GET so just get controller status.
         # Get the latest controller data.
-        staleData, cntrlData, updatePeriod = getControllerStatus()
+        staleData, cntrlData, inputData, outputData, updatePeriod = getControllerStatus()
 
         # Render the web page with controller data,
         # taking into account any action to change modes.
-        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData)
+        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData, iData=inputData, oData=outputData)

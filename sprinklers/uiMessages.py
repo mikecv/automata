@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import logging
+import json
 
 import grpc
 import sprinklers.ui_pb2 as ui_pb2
@@ -33,8 +34,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
         Respond to controller status request from UI.
         """
 
-        self.log.debug(f'Received controller command to send controller status data.')
-
         if request.cmd == ui_pb2.UiCmd.U_CNTRL_STATUS:
             try:
                 # Respond to the UI.
@@ -44,8 +43,11 @@ class UiCommands(ui_pb2_grpc.UiMessages):
                 resp.state = self.ctrl.state.name
                 resp.cTime = datetime.now().strftime("%H:%M:%S")
                 resp.mode = self.ctrl.mode.name
-                resp.program = self.ctrl.program
-                resp.outputs = self.ctrl.outputs
+                # <TODO> Update with packed program info.
+                # resp.program = self.ctrl.program
+                resp.program = "None"
+                resp.inputs = self.inputsSerialised()
+                resp.outputs = self.outputsSerialised()
                 return resp
 
             except grpc.RpcError as e:
@@ -65,8 +67,6 @@ class UiCommands(ui_pb2_grpc.UiMessages):
         """
         Respond to controller mode set request from UI.
         """
-
-        self.log.debug(f'Received controller command to set controller mode.')
 
         if request.cmd == ui_pb2.UiModeControl.C_SET_MODE:
             try:
@@ -93,3 +93,49 @@ class UiCommands(ui_pb2_grpc.UiMessages):
             context.set_details("Unexpected command.")
             self.log.error(f'Unexpected command from UI : {request.cmd}')
             return ui_pb2.ui_pb2.SetControllerModeResp()
+
+    def inputsSerialised(self) -> list:
+        """
+        Get inputs and put into a dictionary,
+        and then convert to json string.
+        Serialising to send to UI if requested.
+        """
+
+        ins = []
+        # Serialise all the inputs.
+        for di in self.ctrl.digitalInputs:
+            iData = {
+                "iName" : di.inputName,
+                "iActive" : di.active
+            }
+            ins.append(iData)
+        # Complete dictionaty with header and inputs.
+        iList = {
+            "gName" : self.ctrl.inputsGroupName,
+            "inputs" : ins
+        }
+
+        return json.dumps(iList)
+
+    def outputsSerialised(self) -> list:
+        """
+        Get outputs and put into a dictionary,
+        and then convert to json string.
+        Serialising to send to UI if requested.
+        """
+
+        outs = []
+        # Serialise all the outputs.
+        for do in self.ctrl.digitalOutputs:
+            oData = {
+                "oName" : do.outputName,
+                "oActive" : do.active
+            }
+            outs.append(oData)
+        # Complete dictionaty with header and outputs.
+        oList = {
+            "gName" : self.ctrl.outputsGroupName,
+            "outputs" : outs
+        }
+
+        return json.dumps(oList)

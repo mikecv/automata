@@ -36,9 +36,11 @@ class GenericController():
         # <TODO> Array of program entries.
         self.program = "Empty"
 
+        # Initialise controller input states.
+        self.digitalInputs = []
+
         # Initialise controller output states.
-        # <TODO> this will be an object of an outputs class.
-        self.outputs = "All Off"
+        self.digitalOutputs = []
 
     @property
     def ctrlName(self) -> None:
@@ -96,6 +98,52 @@ class GenericController():
         """
         self._mode = m
 
+    @property
+    def packedDigIns(self) -> int:
+        """
+        Getter property to get packed digital inputs.
+        Pack digital inputs bitwise into an integer.
+        Reverse the list so that first item in list accounts for least significant bit.
+        Assumes digitals with boolean property .active (refering to signal state).
+
+        This property not currently used but may be useful in the future.
+        """
+
+        # Initialise packed digital ins and bit index.
+        digPacked = 0
+        bitIndex = 1
+
+        # Go through digital IO bit by bit (in reverse).
+        for d in reversed(self.digitalInputs):
+            if d.active:
+                digPacked = digPacked | bitIndex
+            bitIndex = bitIndex << 1
+
+        return digPacked
+
+    @property
+    def packedDigOuts(self) -> int:
+        """
+        Getter property to get packed digital outpus.
+        Pack digital outputs bitwise into an integer.
+        Reverse the list so that first item in list accounts for least significant bit.
+        Assumes digitals with boolean property .active (refering to signal state).
+
+        This property not currently used but may be useful in the future.
+        """
+
+        # Initialise packed digital outs and bit index.
+        digPacked = 0
+        bitIndex = 1
+
+        # Go through digital IO bit by bit (in reverse).
+        for d in reversed(self.digitalOutputs):
+            if d.active:
+                digPacked = digPacked | bitIndex
+            bitIndex = bitIndex << 1
+
+        return digPacked
+
     def stateMachine(self) -> None:
         """
         State machine method.
@@ -138,7 +186,7 @@ class GenericController():
 
     def setMode(self, reqMode: ControllerMode) -> Tuple[Enum, ControllerModeReason]:
         """
-        Set the controller mode as required.
+        SeoFilet the controller mode as required.
         Parameters:
             reqMode : Required controller mode (to set to).
         Returns:

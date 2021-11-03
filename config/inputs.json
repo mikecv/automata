@@ -1,0 +1,17 @@
+{
+    "GroupName": "Inputs",
+    "IO": [
+        {
+            "Name": "RAIN",
+            "activeLevel": "ACTIVE_HIGH"
+        },
+        {
+            "Name": "SNOW",
+            "activeLevel": "ACTIVE_HIGH"
+        },
+        {
+            "Name": "TORNADO",
+            "activeLevel": "ACTIVE_LOW"
+        }
+    ]
+}

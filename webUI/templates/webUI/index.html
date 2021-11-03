@@ -27,47 +27,82 @@
               <th><a>Time</a></th>
               <th><a-dyn>{{ cData["cTime"] }}</a-dyn></th>
             </tr>
+          </table>
+          <table style="text-align:left">
             <!-- Row with current mode, and mode set buttons. -->
             <tr>
-              <th><a>Mode</a></th>
-              <th><a-dyn>{{ cData["mode"] }}</a-dyn></th>
+              <th width="75px"; ><a>Mode</a></th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "ON" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="ON" name="MODEON">ON</button>
+                    {% if cData["mode"] == "ON" %}
+                      <button type="submit" value="ON" name="MODEON" disabled>ON</button>
+                    {% else %}
+                      <button type="submit" value="ON" name="MODEON">ON</button>
+                    {% endif %}
                   </form>
                 </div>
               </th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "OFF" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="OFF" name="MODEOFF">OFF</button>
-                  <form>
+                    {% if cData["mode"] == "OFF" %}
+                      <button type="submit" value="OFF" name="MODEOFF" disabled>OFF</button>
+                    {% else %}
+                      <button type="submit" value="OFF" name="MODEOFF">OFF</button>
+                    {% endif %}
+                  </form>
                 </div>
               </th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "AUTO" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="AUTO" name="MODEAUTO">AUTO</button>
-                  <form>
+                    {% if cData["mode"] == "AUTO" %}
+                      <button type="submit" value="AUTO" name="MODEAUTO" disabled>AUTO</button>
+                    {% else %}
+                      <button type="submit" value="AUTO" name="MODEAUTO">AUTO</button>
+                    {% endif %}
+                  </form>
                 </div>
               </th>
               <th>
-                <div class="modebtn">
+                <div class="{{"modebtn" if cData["mode"] != "MANUAL" else "modebtnDisabled"}}">
                   <form method="post" action="/">
-                    <button type="submit" value="MANUAL" name="MODEMANUAL">MANUAL</button>
-                  <form>
+                    {% if cData["mode"] == "MANUAL" %}
+                      <button type="submit" value="MANUAL" name="MODEMANUAL" disabled>MANUAL</button>
+                    {% else %}
+                      <button type="submit" value="MANUAL" name="MODEMANUAL">MANUAL</button>
+                    {% endif %}
+                  </form>
                 </div>
               </th>
             <tr>
-              <th><a>Program</a></th>
-              <th><a-dyn>{{ cData["program"] }}</a-dyn></th>
-            </tr>
+          </table>
+          <table style="text-align:left">
             <tr>
-              <th><a>Outputs</a></th>
-              <th><a-dyn>{{ cData["outputs"] }}</a-dyn></th>
+              <th width="75px"><a>{{ iData["gName"] }}</a></th>
+              <th>
+                {% for i in iData["inputs"] %}
+                  <span class="{{"activeIO" if i["iActive"] == True else "inactiveIO"}}">{{i["iName"]}}</span>
+                {% endfor %}
+              </th>
             </tr>
-        </table>
+          </table>
+          <table style="text-align:left">
+            <tr>
+              <th width="75px"><a>{{ oData["gName"] }}</a></th>
+              <th>
+                {% for o in oData["outputs"] %}
+                  <span class="{{"activeIO" if o["oActive"] == True else "inactiveIO"}}">{{o["oName"]}}</span>
+                {% endfor %}
+              </th>
+            </tr>
+          </table>
+          <table style="text-align:left">
+            <th width="75px"><a>Program</a></th>
+              <th width="75px"><a-dyn>{{ cData["program"] }}</a-dyn></th>
+            </tr>
+          </table>
         </div>
       {% endif %}
 
