@@ -20,7 +20,6 @@ from utils.filePaths import *
 # TODO List
 #
 # Write unit tests.
-# Add Input/Output functionality.
 # Add program/scheduling functionality.
 # *******************************************
 

@@ -66,6 +66,41 @@ The response includes the mode that the controller has been set to,
 as well as a status and fault reason if the command failed.
 
 --------------------------------------------------------------------------------
+2.1.4 - Contorller Inputs / Outputs (IO)
+--------------------------------------------------------------------------------
+
+The IO that the controller supports is as defined by generic classes in the
+Generic folder. At present, there are two modules called genericDigitalInput.py
+and genericDigitalOutput.py. These are base classes for digital inputs and
+outputs.
+
+In the main application folder there are digital input and output classes
+derived from the base classes that implement digital inputs and outputs for the
+particular hardware the controller is running on.
+
+There are generic constants that dictate the states etc of the IO.
+
+Digital IO can be of Enum type DigtialIoTypem:
+
+DIGITAL_INPUT = 0
+DIGITAL_OUTPUT = 1
+
+The active state of both inputs or outputs is as per Enum type ActiveLevel:
+
+ACTIVE_LOW = 0
+ACTIVE_HIGH = 1
+
+And the digital levels at the hardware level is represented by the Enum type
+Level:
+
+LOW = 0
+HIGH = 1
+
+The application digital input and output classes is where a signals "Level" is
+set, while the base classes determine the active condition of the IO based on
+the active state for the IO.
+
+--------------------------------------------------------------------------------
 2.2 - User Interface
 --------------------------------------------------------------------------------
 

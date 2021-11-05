@@ -1,3 +1,7 @@
+"""
+Flask UI application package.
+"""
+
 import os
 
 from flask import Flask
