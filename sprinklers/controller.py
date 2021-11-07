@@ -47,7 +47,7 @@ class SprinklerController(GenericController, Thread):
                 self.log.debug(f'Importing inputs with group name : {self.inputsGroupName}')
                 # Go through all the inputs in the config file.
                 # Create the digital inputs instance and add to list.
-                for i in ic["IO"]:
+                for i in ic["Inputs"]:
                     inputName = i["Name"]
                     inputActiveLevel = ActiveLevel[i["activeLevel"]]
                     self.digitalInputs.append(DigitalInput(self.log, inputName, inputActiveLevel))
@@ -66,9 +66,17 @@ class SprinklerController(GenericController, Thread):
                 # Import the group name for the outputs.
                 self.outputsGroupName = oc["GroupName"]
                 self.log.debug(f'Importing outputs with group name : {self.outputsGroupName}')
-                # Go through all the outputs in the config file.
+
+                # Get the master output, this will be digitial output 0.
+                outputName = oc["Master"]["Name"]
+                outputActiveLevel = ActiveLevel[oc["Master"]["activeLevel"]]
+                digOut = DigitalOutput(self.log, outputName, outputActiveLevel)
+                self.digitalOutputs.append(digOut)
+                self.log.debug(f'Importing MASTER output name : {outputName}; active level : {outputActiveLevel}')
+
+                # Go through all the (non-master) outputs in the config file.
                 # Create the digital outputs instance and add to list.
-                for o in oc["IO"]:
+                for o in oc["Outputs"]:
                     outputName = o["Name"]
                     outputActiveLevel = ActiveLevel[o["activeLevel"]]
                     digOut = DigitalOutput(self.log, outputName, outputActiveLevel)
@@ -117,9 +125,35 @@ class SprinklerController(GenericController, Thread):
 
             # Look at the programs to see if any action needs to be taken.
             # <TODO> Look through programs for actions to take, i.e. outputs to assert.
-            # For now just set outputs to random values to exercise the UI.
-            for o in self.digitalOutputs:
-                o.writeDigitalOuputLevel(random.choice(list(Level)))
+            # For now just set random output active.
+            opChoice = random.choice(range(0, len(self.digitalOutputs), 1))
+
+            self.setAllOutputsInactive()
+            if opChoice > 0:
+                self.setOutputActive(opChoice)
 
             # Wait a bit before trying again later.
             time.sleep(self.cfg.Timers["ControllerSleep"])
+
+    def setAllOutputsInactive(self) -> None:
+        """
+        Set all digital outputs to inactive.
+        """
+
+        for o in self.digitalOutputs:
+            o.setDigitalOuputActive(False)
+
+        self.log.debug(f'Setting all digital outputs to INACTIVE.')
+
+
+    def setOutputActive(self, oIdx: int) -> None:
+        """
+        Set particular outputs to active.
+        Also sets the master to active as well
+        Parameters:
+            oIdx : Number of digital output (1 onwards)
+        """
+
+        self.digitalOutputs[0].setDigitalOuputActive(True)
+        self.digitalOutputs[oIdx].setDigitalOuputActive(True)
+

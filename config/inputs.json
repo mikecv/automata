@@ -1,6 +1,6 @@
 {
     "GroupName": "Inputs",
-    "IO": [
+    "Inputs": [
         {
             "Name": "RAIN",
             "activeLevel": "ACTIVE_HIGH"

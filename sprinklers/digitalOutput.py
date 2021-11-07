@@ -40,3 +40,22 @@ class DigitalOutput(GenericDigitalOutput):
 
         # This is at the hardware layer so writing level.
         self.level = oLevel
+
+    def setDigitalOuputActive(self, oActive: bool) -> None:
+        """
+        Set digital output active or not.
+        Parameters:
+            oActive : True if output is to be set active.
+        """
+
+        if oActive == True:
+            if self.activeLevel == ActiveLevel.ACTIVE_LOW:
+                self.level = Level.LOW
+            else:
+                self.level = Level.HIGH
+        else:
+            if self.activeLevel == ActiveLevel.ACTIVE_LOW:
+                self.level = Level.HIGH
+            else:
+                self.level = Level.LOW
+

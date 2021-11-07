@@ -1,11 +1,12 @@
 {
     "GroupName": "Stations",
-    "IO": [
-        {
-            "Name": "MASTER",
-            "activeLevel": "ACTIVE_LOW",
-            "InitLevel": "LOW"
-        },
+    "Master":
+    {
+        "Name": "MASTER",
+        "activeLevel": "ACTIVE_LOW",
+        "InitLevel": "LOW"
+    },
+    "Outputs": [
         {
             "Name": "1",
             "activeLevel": "ACTIVE_HIGH",
