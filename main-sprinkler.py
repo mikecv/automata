@@ -64,7 +64,7 @@ def main(cFile: str, lFile: str, iFile: str, oFile: str, pFile: str) -> None:
     # Create an instance of a controller.
     # Controller is a threaded class so start the thread running.
     logger.info(f'Creating controller, and starting thread : {cfg.ControllerName}')
-    c = SprinklerController(cfg, logger, cfg.ControllerName, iFile, oFile)
+    c = SprinklerController(cfg, logger, cfg.ControllerName, iFile, oFile, pFile)
     c.start()
 
     # Create an instance of a UI server.

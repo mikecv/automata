@@ -17,7 +17,7 @@ class SprinklerController(GenericController, Thread):
     Derive from a generic controller class.
     """
 
-    def __init__(self, config: Config, log: logging, name: str, iFile: str, oFile: str) -> None:
+    def __init__(self, config: Config, log: logging, name: str, iFile: str, oFile: str, pFile: str) -> None:
         """
         Initialisation method.
         Parameters:
@@ -26,6 +26,7 @@ class SprinklerController(GenericController, Thread):
             name : Name of the controller.
             iFile : Name of inputs configuration (json) file.
             oFile : Name of outputs configuration (json) file.
+            pFile : Name of controller program configuration (json) file.
         """
 
         self.cfg = config
@@ -34,6 +35,89 @@ class SprinklerController(GenericController, Thread):
         # Super class initialisations.
         GenericController.__init__(self, name, log)
         Thread.__init__(self)
+
+        # Import the inputs (IO) configuration file.
+        self.importDigitalInputs(iFile)
+
+        # Import the outputs (IO) configuration file.
+        self.importDigitalOutputs(oFile)
+
+        # Import the controller program configuration file.
+        self.importControllerProgram(pFile)
+
+    def run(self) -> None:
+        """
+        Run threaded method.
+        Loop forever, checking for state transitions.
+        Mainline will kill thread when self.stayAlive is False.
+        """
+
+        self.log.debug(f'Controller thread running.')
+
+        while self.stayAlive:
+            # Check state in state machine.
+            self.stateMachine()
+
+    def controlling(self) -> None:
+        """
+        Definition of abstract method to perform controlling functions.
+        """
+
+        self.log.debug(f'Controller processing in ACTIVE mode.')
+
+        # Initialise variable to follow if still can control.
+        # If canControl set to False because of error, controlling will end,
+        # and will return to run method and state machine.
+        canControl = True
+
+        while canControl:
+
+            # All the periodic activities that the controller has to do.
+
+            # Read the state of all the inputs.
+            for i in self.digitalInputs:
+                i.readDigitalInputLevel()
+
+            # Look at the programs to see if any action needs to be taken.
+            # <TODO> Look through programs for actions to take, i.e. outputs to assert.
+            # For now just set random output active.
+            opChoice = random.choice(range(0, len(self.digitalOutputs), 1))
+
+            self.setAllOutputsInactive()
+            if opChoice > 0:
+                self.setOutputActive(opChoice)
+
+            # Wait a bit before trying again later.
+            time.sleep(self.cfg.Timers["ControllerSleep"])
+
+    def setAllOutputsInactive(self) -> None:
+        """
+        Set all digital outputs to inactive.
+        """
+
+        for o in self.digitalOutputs:
+            o.setDigitalOuputActive(False)
+
+        self.log.debug(f'Setting all digital outputs to INACTIVE.')
+
+
+    def setOutputActive(self, oIdx: int) -> None:
+        """
+        Set particular outputs to active.
+        Also sets the master to active as well.
+        Parameters:
+            oIdx : Number of digital output (1 onwards)
+        """
+
+        self.digitalOutputs[0].setDigitalOuputActive(True)
+        self.digitalOutputs[oIdx].setDigitalOuputActive(True)
+
+    def importDigitalInputs(self, iFile: str) -> None:
+        """
+        Import digital inputs configuration file.
+        Parameters:
+            iFile : Name of digital inputs configuration file.
+        """
 
         # Import the inputs (IO) configuration file.
         # Some of the configuration data is generic IO and some is specific to this implementation.
@@ -55,6 +139,13 @@ class SprinklerController(GenericController, Thread):
         except Exception:
             # Failed to import inputs configuration file.
             self.log.error(f'Failed to import inputs configuration file.')
+
+    def importDigitalOutputs(self, oFile: str) -> None:
+        """
+        Import digital outputs configuration file.
+        Parameters:
+            oFile : Name of digital outputs configuration file.
+        """
 
         # Import the outputs (IO) configuration file.
         # Some of the configuration data is generic IO and some is specific to this implementation.
@@ -90,70 +181,39 @@ class SprinklerController(GenericController, Thread):
             # Failed to import outputs configuration file.
             self.log.error(f'Failed to import outputs configuration file.')
 
-    def run(self) -> None:
+    def importControllerProgram(self, pFile: str) -> None:
         """
-        Run threaded method.
-        Loop forever, checking for state transitions.
-        Mainline will kill thread when self.stayAlive is False.
-        """
-
-        self.log.debug(f'Controller thread running.')
-
-        while self.stayAlive:
-            # Check state in state machine.
-            self.stateMachine()
-
-    def controlling(self) -> None:
-        """
-        Definition of abstract method to perform controlling functions.
-        """
-
-        self.log.debug(f'Controller processing in ACTIVE mode.')
-
-        # Initialise variable to follow if still can control.
-        # If canControl set to False because of error, controlling will end,
-        # and will return to run method and state machine.
-        canControl = True
-
-        while canControl:
-
-            # All the period activities that the controller has to do.
-
-            # Read the state of all the inputs.
-            for i in self.digitalInputs:
-                i.readDigitalInputLevel()
-
-            # Look at the programs to see if any action needs to be taken.
-            # <TODO> Look through programs for actions to take, i.e. outputs to assert.
-            # For now just set random output active.
-            opChoice = random.choice(range(0, len(self.digitalOutputs), 1))
-
-            self.setAllOutputsInactive()
-            if opChoice > 0:
-                self.setOutputActive(opChoice)
-
-            # Wait a bit before trying again later.
-            time.sleep(self.cfg.Timers["ControllerSleep"])
-
-    def setAllOutputsInactive(self) -> None:
-        """
-        Set all digital outputs to inactive.
-        """
-
-        for o in self.digitalOutputs:
-            o.setDigitalOuputActive(False)
-
-        self.log.debug(f'Setting all digital outputs to INACTIVE.')
-
-
-    def setOutputActive(self, oIdx: int) -> None:
-        """
-        Set particular outputs to active.
-        Also sets the master to active as well
+        Import controller program configuration file.
         Parameters:
-            oIdx : Number of digital output (1 onwards)
+            pFile : Name of controller program configuration file.
         """
 
-        self.digitalOutputs[0].setDigitalOuputActive(True)
-        self.digitalOutputs[oIdx].setDigitalOuputActive(True)
+        # Import the controller program configuration file.
+        self.log.debug(f'Importing controller programs.')
+        try:
+            with open(pFile) as programConfig:
+                pc = json.load(programConfig)
 
+                # Import the group name for the outputs.
+                myDays = []
+                for day in pc["MyDays"]:
+                    myDays.append(ProgramDays[day])
+                # Import each of the programs.
+                pgs = []
+                for p in pc["Programs"]:
+                    pg = {}
+                    progName = p["Name"]
+                    for ot in p["OnTimes"]:
+                        startTime = ot["Start"]
+                        duration = ot["Duration"]
+                        stations = []
+                        for st in ot["Stations"]:
+                            stations.append(st)
+                        ots = {"Start": startTime, "Duration": duration, "Stations": stations}
+                    pg = {"Name": progName, "OnTimes": ots}
+                    pgs.append(pg)
+                self.program = {"MyDays": myDays, "Programs": pgs}
+
+        except Exception:
+            # Failed to import controller program configuration file.
+            self.log.error(f'Failed to import controller program configuration file.')
