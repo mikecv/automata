@@ -1,2 +1,18 @@
-# automata
-Home automation.
+# Environment
+python3 -m venv venv
+
+# Activate environment
+source venv/bin/activate (linux)
+venv\Source\activate.bat (Win)
+venv\Scripts\Activate.ps1 (Win PowerShell)
+
+# Leave environment
+deactivate
+
+# Installing packages (inside environment)
+python -m pip install grpcio
+python -m pip install grpcio-tools
+python -m pip install flask
+
+# Alternatively install packages from requirements file.
+pip install -r requirements.txt

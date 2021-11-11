@@ -30,7 +30,7 @@ $env:FLASK_ENV = "development" (Win PowerShell)
 // Note that you have evironments above set up)
 flask init-db
 
-// Running flask (after environments set up)
+// Running flask (after environment set up)
 flask run
 
 // Login from http://127.0.0.1:5000/auth/login

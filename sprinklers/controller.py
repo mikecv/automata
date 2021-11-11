@@ -133,6 +133,7 @@ class SprinklerController(GenericController, Thread):
                 # Create the digital inputs instance and add to list.
                 for i in ic["Inputs"]:
                     inputName = i["Name"]
+                    # <TODO> Add checks that active level in config is a valid value.
                     inputActiveLevel = ActiveLevel[i["activeLevel"]]
                     self.digitalInputs.append(DigitalInput(self.log, inputName, inputActiveLevel))
                     self.log.debug(f'Importing input name : {inputName}; active level : {inputActiveLevel}')
@@ -169,6 +170,7 @@ class SprinklerController(GenericController, Thread):
                 # Create the digital outputs instance and add to list.
                 for o in oc["Outputs"]:
                     outputName = o["Name"]
+                    # <TODO> Add checks that active level in config is a valid value.
                     outputActiveLevel = ActiveLevel[o["activeLevel"]]
                     digOut = DigitalOutput(self.log, outputName, outputActiveLevel)
                     self.digitalOutputs.append(digOut)
@@ -184,6 +186,8 @@ class SprinklerController(GenericController, Thread):
     def importControllerProgram(self, pFile: str) -> None:
         """
         Import controller program configuration file.
+        Perform consistency and feasibility check on data, e.g. that
+        programs are achievable, days/times exist etc.
         Parameters:
             pFile : Name of controller program configuration file.
         """
@@ -196,6 +200,8 @@ class SprinklerController(GenericController, Thread):
 
                 # Import the group name for the outputs.
                 myDays = []
+                # Get the allocated days for the controller.
+                # <TODO> Add checks that days are legitimate days.
                 for day in pc["MyDays"]:
                     myDays.append(ProgramDays[day])
                 # Import each of the programs.
@@ -203,6 +209,8 @@ class SprinklerController(GenericController, Thread):
                 for p in pc["Programs"]:
                     pg = {}
                     progName = p["Name"]
+                    # <TODO> Add checks that start times and durations are valid,
+                    # would result in the cycke starting and ending in the same day.
                     for ot in p["OnTimes"]:
                         startTime = ot["Start"]
                         duration = ot["Duration"]

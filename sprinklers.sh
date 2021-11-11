@@ -2,7 +2,7 @@
 
 source "./venv.sh"
 
-echo "Creating sprinkler controller..."
+echo "Creating sprinklers controller..."
 
-python main-sprinkler.py
+python main-sprinklers.py
 
