@@ -68,6 +68,7 @@ class SprinklerController(GenericController, Thread):
         # Initialise variable to follow if still can control.
         # If canControl set to False because of error, controlling will end,
         # and will return to run method and state machine.
+        # <TODO> Implement controll including loss of control.
         canControl = True
 
         while canControl:
@@ -100,7 +101,6 @@ class SprinklerController(GenericController, Thread):
 
         self.log.debug(f'Setting all digital outputs to INACTIVE.')
 
-
     def setOutputActive(self, oIdx: int) -> None:
         """
         Set particular outputs to active.
@@ -115,6 +115,7 @@ class SprinklerController(GenericController, Thread):
     def importDigitalInputs(self, iFile: str) -> None:
         """
         Import digital inputs configuration file.
+        Should do some checking of the configuration.
         Parameters:
             iFile : Name of digital inputs configuration file.
         """
@@ -144,6 +145,7 @@ class SprinklerController(GenericController, Thread):
     def importDigitalOutputs(self, oFile: str) -> None:
         """
         Import digital outputs configuration file.
+        Should do some checking of the configuration.
         Parameters:
             oFile : Name of digital outputs configuration file.
         """

@@ -20,7 +20,7 @@ from utils.filePaths import *
 # TODO List
 #
 # Write unit tests.
-# Add program/scheduling functionality. (WIP)
+# Add program/scheduling functionality.
 # *******************************************
 
 # Program name, version, and date.
@@ -75,6 +75,7 @@ def main(cFile: str, lFile: str, iFile: str, oFile: str, pFile: str) -> None:
 
     # Keep checking if controller is still alive,
     # if so, keep processing.
+    # <TODO> Implement errors and terminations.
     while c.stayAlive:
         pass
 
@@ -105,6 +106,7 @@ if __name__ == "__main__":
         oFile = os.path.join("./config", "outputs.json")
         pFile = os.path.join("./config", "program.json")
 
+        # Check for configuration options different to default.
         if args.config:
             cFile = args.config
         if args.log:
