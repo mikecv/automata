@@ -33,8 +33,7 @@ class GenericController():
         self._mode = ControllerMode.OFF
 
         # Initialise controller program to empty.
-        # <TODO> Array of program entries.
-        self.program = "Empty"
+        self.program = {}
 
         # Initialise controller input states.
         self.digitalInputs = []

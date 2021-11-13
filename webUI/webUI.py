@@ -24,6 +24,7 @@ def index():
     cntrlData = {}
     inputData = {}
     outputData = {}
+    programData = {}
 
     if request.method == 'POST':
         # Check for controller mode changes.
@@ -43,7 +44,7 @@ def index():
         # If controller action was successful then get controller status.
         if staleData == False:
             # Get the latest controller data.
-            staleData, cntrlData, inputData, outputData, updatePeriod = getControllerStatus()
+            staleData, cntrlData, inputData, outputData, programData, updatePeriod = getControllerStatus()
 
             # If there was an error when doing the controller action,
             # then overwrite the update / represh period to give more time for the alert.
@@ -52,12 +53,12 @@ def index():
 
         # Render the web page with controller data,
         # taking into account any action to change modes.
-        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData, iData=inputData, oData=outputData)
+        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData, iData=inputData, oData=outputData, pData=programData)
     else:
         # Request is for a GET so just get controller status.
         # Get the latest controller data.
-        staleData, cntrlData, inputData, outputData, updatePeriod = getControllerStatus()
+        staleData, cntrlData, inputData, outputData, programData, updatePeriod = getControllerStatus()
 
         # Render the web page with controller data,
         # taking into account any action to change modes.
-        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData, iData=inputData, oData=outputData)
+        return render_template('webUI/index.html', refresh=updatePeriod, linkStale=staleData, cData=cntrlData, iData=inputData, oData=outputData, pData=programData)
