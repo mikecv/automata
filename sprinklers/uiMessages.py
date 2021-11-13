@@ -164,5 +164,5 @@ class UiCommands(ui_pb2_grpc.UiMessages):
             "Programs" : pgs
         }
 
+        print(json.dumps(pDict))
         return json.dumps(pDict)
-        # return "None"
