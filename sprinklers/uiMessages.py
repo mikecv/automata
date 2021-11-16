@@ -41,11 +41,11 @@ class UiCommands(ui_pb2_grpc.UiMessages):
                 resp.status = ui_pb2.StatusCmdStatus.US_GOOD
                 resp.name = self.cfg.ControllerName
                 resp.state = self.ctrl.state.name
-                resp.cTime = datetime.now().strftime("%H:%M:%S")
+                # Show day of the week in controller time, so that user can compare with program.
+                resp.cTime = datetime.now().strftime("%A, %d/%m/%Y, %H:%M:%S")
                 resp.mode = self.ctrl.mode.name
-                # <TODO> Update with packed program info.
-                # resp.program = self.ctrl.program
-                resp.program = "None"
+                # Serialise controller data - inputs, outputs, controller program.
+                resp.program = self.programSerialised()
                 resp.inputs = self.inputsSerialised()
                 resp.outputs = self.outputsSerialised()
                 return resp
@@ -94,11 +94,13 @@ class UiCommands(ui_pb2_grpc.UiMessages):
             self.log.error(f'Unexpected command from UI : {request.cmd}')
             return ui_pb2.ui_pb2.SetControllerModeResp()
 
-    def inputsSerialised(self) -> list:
+    def inputsSerialised(self) -> str:
         """
         Get inputs and put into a dictionary,
         and then convert to json string.
         Serialising to send to UI if requested.
+        Returns:
+            serialised dictionary of input IO.
         """
 
         ins = []
@@ -110,18 +112,20 @@ class UiCommands(ui_pb2_grpc.UiMessages):
             }
             ins.append(iData)
         # Complete dictionaty with header and inputs.
-        iList = {
+        iDict = {
             "gName" : self.ctrl.inputsGroupName,
             "inputs" : ins
         }
 
-        return json.dumps(iList)
+        return json.dumps(iDict)
 
-    def outputsSerialised(self) -> list:
+    def outputsSerialised(self) -> str:
         """
         Get outputs and put into a dictionary,
         and then convert to json string.
         Serialising to send to UI if requested.
+        Returns:
+            serialised dictionary of output IO.
         """
 
         outs = []
@@ -133,9 +137,32 @@ class UiCommands(ui_pb2_grpc.UiMessages):
             }
             outs.append(oData)
         # Complete dictionaty with header and outputs.
-        oList = {
+        oDict = {
             "gName" : self.ctrl.outputsGroupName,
             "outputs" : outs
         }
 
-        return json.dumps(oList)
+        return json.dumps(oDict)
+
+    def programSerialised(self) -> str:
+        """
+        Get controller program and convert to json string.
+        Serialising to send to UI if requested.
+        Returns:
+            serialised dictionary of controller program data.
+        """
+
+        myDays = []
+        for d in self.ctrl.program["MyDays"]:
+            # Only send day name to UI.
+            myDays.append(d.name)
+        pgs = []
+        for p in self.ctrl.program["Programs"]:
+            pgs.append(p)
+        pDict = {
+            "MyDays" : myDays,
+            "Programs" : pgs
+        }
+
+        print(json.dumps(pDict))
+        return json.dumps(pDict)

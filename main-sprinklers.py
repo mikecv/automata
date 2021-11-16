@@ -29,7 +29,7 @@ progVersion = "0.1"
 progDate = "2021"
 
 # Program main.
-def main(cFile: str, lFile: str, iFile: str, oFile: str) -> None:
+def main(cFile: str, lFile: str, iFile: str, oFile: str, pFile: str) -> None:
     """
     Controller mainline.
     Parameters:
@@ -37,6 +37,7 @@ def main(cFile: str, lFile: str, iFile: str, oFile: str) -> None:
         lFile : Program log file.
         iFile : Inputs configuration file.
         oFile : Outputs configuration file.
+        pFile : Program (watering) configuration file.
     """
 
     # Check if paths for config and logs exists and create if not.
@@ -44,6 +45,7 @@ def main(cFile: str, lFile: str, iFile: str, oFile: str) -> None:
     chkPath(lFile)
     chkPath(iFile)
     chkPath(oFile)
+    chkPath(pFile)
 
     # Create configuration values class object.
     cfg = Config(cFile)
@@ -62,7 +64,7 @@ def main(cFile: str, lFile: str, iFile: str, oFile: str) -> None:
     # Create an instance of a controller.
     # Controller is a threaded class so start the thread running.
     logger.info(f'Creating controller, and starting thread : {cfg.ControllerName}')
-    c = SprinklerController(cfg, logger, cfg.ControllerName, iFile, oFile)
+    c = SprinklerController(cfg, logger, cfg.ControllerName, iFile, oFile, pFile)
     c.start()
 
     # Create an instance of a UI server.
@@ -73,6 +75,7 @@ def main(cFile: str, lFile: str, iFile: str, oFile: str) -> None:
 
     # Keep checking if controller is still alive,
     # if so, keep processing.
+    # <TODO> Implement errors and terminations.
     while c.stayAlive:
         pass
 
@@ -87,6 +90,7 @@ if __name__ == "__main__":
     parser.add_argument("-l", "--log", help="Log file.")
     parser.add_argument("-i", "--inputs", help="Json inputs configuration file.")
     parser.add_argument("-o", "--outputs", help="Json outputs configuration file.")
+    parser.add_argument("-p", "--program", help="Json (watering) program configuration file.")
     parser.add_argument("-v", "--version", help="Program version.", action="store_true")
     args = parser.parse_args()
 
@@ -100,7 +104,9 @@ if __name__ == "__main__":
         lFile = os.path.join("./logs", progName + "." + "log")
         iFile = os.path.join("./config", "inputs.json")
         oFile = os.path.join("./config", "outputs.json")
+        pFile = os.path.join("./config", "program.json")
 
+        # Check for configuration options different to default.
         if args.config:
             cFile = args.config
         if args.log:
@@ -109,4 +115,6 @@ if __name__ == "__main__":
             iFile = args.inputs
         if args.outputs:
             oFile = args.outputs
-        main(cFile, lFile, iFile, oFile)
+        if args.program:
+            pFile = args.program
+        main(cFile, lFile, iFile, oFile, pFile)

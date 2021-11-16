@@ -1,15 +1,14 @@
-# Environment
+# Create the virtual environment.
 python3 -m venv venv
 
-# Activate environment
-source venv/bin/activate (linux)
-venv\Source\activate.bat (Win)
-venv\Scripts\Activate.ps1 (Win PowerShell)
+# Activate the virtual environment (as applicable).
+source ./venv/bin/activate (linux)
+.\venv\Source\activate.bat (Win)
+.\venv\Scripts\Activate.ps1 (Win PowerShell)
 
-# Leave environment
+# Installing the required packages into the virtual environment.
+# Requiredisted in the requirements.txt file.
+python -m pip -r requirements.txt
+
+# To leave the virtual environment.
 deactivate
-
-# Installing packages (inside environment)
-python -m pip install grpcio
-python -m pip install grpcio-tools
-python -m pip install flask

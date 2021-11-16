@@ -62,14 +62,15 @@ def setControllerMode(reqMode: str) -> Tuple[bool, bool]:
 
     return staleData, isError
 
-def getControllerStatus() -> Tuple[bool, dict, dict, dict, int]:
+def getControllerStatus() -> Tuple[bool, dict, dict, dict, dict, int]:
     """
     Get the controller status.
     Returns:
         staleData : Flag if controller responded or not
         cntrlData : Controller status data.
-        inputData : Controller input dacntrlDatata.
-        outputData : Controller outputs dacntrlDatata.
+        inputData : Controller input data.
+        outputData : Controller outputs data.
+        programData : Controller Program data.
         updatePeriod : UI update / refresh period.
     """
 
@@ -83,6 +84,7 @@ def getControllerStatus() -> Tuple[bool, dict, dict, dict, int]:
     cntrlData = {}
     inputData = {}
     outputData = {}
+    programData = {}
 
     # Set up channel to controller to get interface with controller.
     channel = grpc.insecure_channel(f'{current_app.config["UI_IP"]}:{current_app.config["UI_PORT"]}')
@@ -111,6 +113,7 @@ def getControllerStatus() -> Tuple[bool, dict, dict, dict, int]:
             }
             inputData = json.loads(response.inputs)
             outputData = json.loads(response.outputs)
+            programData = json.loads(response.program)
 
             # Speed up web page refresh rate now that we are connected.
             updatePeriod = current_app.config["UI_REFRESH_PERIOD_FAST"]
@@ -122,4 +125,4 @@ def getControllerStatus() -> Tuple[bool, dict, dict, dict, int]:
         # Failed to receive response from server.
         pass
 
-    return staleData, cntrlData, inputData, outputData, updatePeriod
+    return staleData, cntrlData, inputData, outputData, programData, updatePeriod

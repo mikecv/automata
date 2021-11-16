@@ -24,8 +24,8 @@
               <th width="75px"; ><a-dyn>{{ cData["state"] }}</a-dyn></th>
             </tr>
             <tr>
-              <th><a>Time</a></th>
-              <th><a-dyn>{{ cData["cTime"] }}</a-dyn></th>
+              <th width="75px"; ><a>Time</a></th>
+              <th width="250px"; ><a-dyn>{{ cData["cTime"] }}</a-dyn></th>
             </tr>
           </table>
           <table style="text-align:left">
@@ -99,9 +99,33 @@
             </tr>
           </table>
           <table style="text-align:left">
-            <th width="75px"><a>Program</a></th>
-              <th width="75px"><a-dyn>{{ cData["program"] }}</a-dyn></th>
+            <tr>
+              <th width="75px"><a>My Days</a></th>
+              <th width="200px"><a-dyn>{% for d in pData["MyDays"] %} {{ d }}, {% endfor %}</a-dyn></th>
             </tr>
+          </table>
+          <table style="text-align:left">
+            {% for pg in pData["Programs"] %}
+              <tr>
+                <th width="75px"><a>Program</a></th>
+                <th width="100px"><a-dyn>{{ pg["Name"] }}</a-dyn></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th><a>On Time</a></th>
+                <th><a-dyn>{{ pg["OnTimes"]["Start"] }} hrs</a-dyn></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th><a>Duration</a></th>
+                <th><a-dyn>{{ pg["OnTimes"]["Duration"] }} minutes</a-dyn></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th><a>Stations</a></th>
+                <th><a-dyn>{% for st in pg["OnTimes"]["Stations"] %} {{ st }}, {% endfor %}</a-dyn></th>
+              </tr>
+            {% endfor %}
           </table>
         </div>
       {% endif %}

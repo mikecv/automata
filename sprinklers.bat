@@ -1,5 +1,5 @@
 @ECHO OFF
 
-ECHO Creating sprinkler controller...
+ECHO Creating sprinklers controller...
 
-venv\Scripts\activate.bat && python main-sprinkler.py
+venv\Scripts\activate.bat && python main-sprinklers.py

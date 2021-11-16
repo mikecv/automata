@@ -1,0 +1,30 @@
+{
+    "MyDays": ["Monday", "Thursday"],
+    "Programs": [
+        {
+            "Name": "A",
+            "OnTimes": [
+                {   
+                    "Start": "0645",
+                    "Duration": 10,
+                    "Stations": [1, 2, 3, 4, 5, 6]
+                },
+                {   
+                    "Start": "1915",
+                    "Duration": 10,
+                    "Stations": [4, 5, 6]
+                }
+            ]
+        },
+        {
+            "Name": "B",
+            "OnTimes": [
+                {   
+                    "Start": "1830",
+                    "Duration": 10,
+                    "Stations": [1, 2, 3]
+                }
+            ]
+        }
+    ]
+}
